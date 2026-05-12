@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia - Anita ❤️</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/index.css">
+</head>
+<body>
+
+    <button id="theme-toggle" class="theme-btn"><i class="fas fa-moon"></i></button>
+
+    <nav class="nav-container" id="main-nav">
+        <div class="nav-item active" onclick="scrollToSection('inicio')">
+            <i class="fas fa-home"></i>
+            <span class="nav-text">Inicio</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('mes1')">
+            <i class="fas fa-heart"></i>
+            <span class="nav-text">Mes 1</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('mes2')">
+            <i class="fas fa-star"></i>
+            <span class="nav-text">Mes 2</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('mes3')">
+            <i class="fas fa-camera"></i>
+            <span class="nav-text">Mes 3</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('mes4')">
+            <i class="fas fa-gift"></i>
+            <span class="nav-text">Mes 4</span>
+        </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+        <h1 class="glow" data-aos="zoom-in">Anita</h1>
+        <div class="contador-wrapper" data-aos="fade-up">
+            <div id="contador" class="contador-estilo"></div>
+        </div>
+        <p class="tagline" data-aos="fade-up" data-aos-delay="200">Nuestra historia de amor en tiempo real</p>
+        <button class="btn-custom" onclick="soltarSorpresa()" data-aos="fade-up" data-aos-delay="400">¡Haz clic aquí, Anita!</button>
+    </header>
+
+    <main class="contenedor">
+        <section class="mes-seccion" id="mes1">
+            <h2 class="titulo-mes" data-aos="fade-right">Mes 1: Nuestro Primer Suspiro</h2>
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (5).jpeg"><p class="pie">El inicio</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (1).jpeg"><p class="pie">Tu sonrisa</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (3).jpeg"><p class="pie">Esa mirada</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (2).jpeg"><p class="pie">Manitos</p></div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (7).jpeg"><p class="pie">Karaoke</p></div>
+            </div>
+        </section>
+
+        <section class="mes-seccion" id="mes2">
+            <h2 class="titulo-mes" data-aos="fade-left">Mes 2: Creciendo en Amor</h2>
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (20).jpeg"><p class="pie">👅</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (8).jpeg"><p class="pie">Días de sol</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (9).jpeg"><p class="pie">Hermosa</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (18).jpeg"><p class="pie">Te quiero</p></div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (17).jpeg"><p class="pie">Inolvidable</p></div>
+            </div>
+        </section>
+
+        <section class="mes-seccion" id="mes3">
+            <h2 class="titulo-mes" data-aos="zoom-in">Mes 3: Cada Vez Más Unidos</h2>
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (12).jpeg"><p class="pie">Comfama</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (10).jpeg"><p class="pie">Mi lugar favorito</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (14).jpeg"><p class="pie">Vinito</p></div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (15).jpeg"><p class="pie">Momentos</p></div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (23).jpeg"><p class="pie">Pajarito</p></div>
+            </div>
+        </section>
+
+        <section class="mes-seccion" id="mes4">
+            <h2 class="titulo-mes" data-aos="fade-up">Mes 4: El Presente</h2>
+            
+            <div class="envelope-wrapper" data-aos="zoom-in" onclick="openEnvelope()">
+                <div class="envelope">
+                    <div class="letter">
+                        <p>Anita, gracias por estos 4 meses. Eres lo mejor de mi vida. ❤️</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="misterio-card" data-aos="fade-up">
+                <div class="signo">?</div>
+                <p>Nuevos recuerdos por crear hoy...</p>
+                <button class="btn-custom" onclick="mensajeEspecial()">¿Quieres saber algo?</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="JS/index.js"></script>
+</body>
+</html>
