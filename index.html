@@ -2,105 +2,301 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#fff0f3">
     <title>Nuestra Historia - Anita ❤️</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="CSS/index.css">
 </head>
 <body>
 
-    <button id="theme-toggle" class="theme-btn"><i class="fas fa-moon"></i></button>
+    <!-- Canvas for soft floating particles -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-    <nav class="nav-container" id="main-nav">
-        <div class="nav-item active" onclick="scrollToSection('inicio')">
-            <i class="fas fa-home"></i>
+    <!-- Ambient glow orbs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+
+    <!-- Hearts layer -->
+    <div id="hearts-container" aria-hidden="true"></div>
+
+    <!-- Sunflowers layer -->
+    <div id="sunflowers-container" aria-hidden="true"></div>
+
+    <!-- Page loader -->
+    <div id="page-loader" role="status" aria-label="Cargando">
+        <div class="loader-heart">
+            <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,85 C50,85 5,55 5,28 C5,14 16,5 27,5 C36,5 44,10 50,18 C56,10 64,5 73,5 C84,5 95,14 95,28 C95,55 50,85 50,85Z"/>
+            </svg>
+        </div>
+        <p class="loader-text">Cargando nuestra historia...</p>
+    </div>
+
+    <!-- Theme toggle -->
+    <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Bottom navbar -->
+    <nav class="nav-container" id="main-nav" aria-label="Navegación principal">
+        <div class="nav-item active" onclick="scrollToSection('inicio')" role="button" tabindex="0">
+            <i class="fas fa-home" aria-hidden="true"></i>
             <span class="nav-text">Inicio</span>
         </div>
-        <div class="nav-item" onclick="scrollToSection('mes1')">
-            <i class="fas fa-heart"></i>
+        <div class="nav-item" onclick="scrollToSection('mes1')" role="button" tabindex="0">
+            <i class="fas fa-heart" aria-hidden="true"></i>
             <span class="nav-text">Mes 1</span>
         </div>
-        <div class="nav-item" onclick="scrollToSection('mes2')">
-            <i class="fas fa-star"></i>
+        <div class="nav-item" onclick="scrollToSection('mes2')" role="button" tabindex="0">
+            <i class="fas fa-star" aria-hidden="true"></i>
             <span class="nav-text">Mes 2</span>
         </div>
-        <div class="nav-item" onclick="scrollToSection('mes3')">
-            <i class="fas fa-camera"></i>
+        <div class="nav-item" onclick="scrollToSection('mes3')" role="button" tabindex="0">
+            <i class="fas fa-camera" aria-hidden="true"></i>
             <span class="nav-text">Mes 3</span>
         </div>
-        <div class="nav-item" onclick="scrollToSection('mes4')">
-            <i class="fas fa-gift"></i>
+        <div class="nav-item" onclick="scrollToSection('mes4')" role="button" tabindex="0">
+            <i class="fas fa-gift" aria-hidden="true"></i>
             <span class="nav-text">Mes 4</span>
         </div>
     </nav>
 
+    <!-- ═══════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════ -->
     <header class="hero" id="inicio">
-        <h1 class="glow" data-aos="zoom-in">Anita</h1>
-        <div class="contador-wrapper" data-aos="fade-up">
-            <div id="contador" class="contador-estilo"></div>
+        <div class="hero-bg-glow" aria-hidden="true"></div>
+
+        <div class="hero-content">
+            <div class="hero-label" data-aos="fade-down" data-aos-duration="800">
+                ✦ nuestra historia ✦
+            </div>
+
+            <h1 class="glow" data-aos="zoom-in" data-aos-duration="1100">Anita</h1>
+
+            <div class="contador-wrapper" data-aos="fade-up" data-aos-delay="200">
+                <div class="contador-label">llevamos juntos</div>
+                <div id="contador" class="contador-estilo" aria-live="polite"></div>
+                <div class="contador-label">de amor</div>
+            </div>
+
+            <p class="tagline" data-aos="fade-up" data-aos-delay="320">
+                Nuestra historia de amor en tiempo real
+            </p>
+
+            <button class="btn-custom" onclick="soltarSorpresa()"
+                    data-aos="fade-up" data-aos-delay="440">
+                <span>¡Haz clic aquí, Anita!</span>
+                <i class="fas fa-heart btn-icon" aria-hidden="true"></i>
+            </button>
         </div>
-        <p class="tagline" data-aos="fade-up" data-aos-delay="200">Nuestra historia de amor en tiempo real</p>
-        <button class="btn-custom" onclick="soltarSorpresa()" data-aos="fade-up" data-aos-delay="400">¡Haz clic aquí, Anita!</button>
+
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="650" aria-hidden="true">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+            <span>Desplázate</span>
+        </div>
     </header>
 
+    <!-- ═══════════════════════════════════════
+         MAIN CONTENT
+    ═══════════════════════════════════════ -->
     <main class="contenedor">
+
+        <!-- ── MES 1 ────────────────────────── -->
+
         <section class="mes-seccion" id="mes1">
-            <h2 class="titulo-mes" data-aos="fade-right">Mes 1: Nuestro Primer Suspiro</h2>
-            <div class="galeria">
-                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (5).jpeg"><p class="pie">El inicio</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (1).jpeg"><p class="pie">Tu sonrisa</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (3).jpeg"><p class="pie">Esa mirada</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (2).jpeg"><p class="pie">Manitos</p></div>
-                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (7).jpeg"><p class="pie">Karaoke</p></div>
-            </div>
-        </section>
-
-        <section class="mes-seccion" id="mes2">
-            <h2 class="titulo-mes" data-aos="fade-left">Mes 2: Creciendo en Amor</h2>
-            <div class="galeria">
-                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (20).jpeg"><p class="pie">👅</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (8).jpeg"><p class="pie">Días de sol</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (9).jpeg"><p class="pie">Hermosa</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (18).jpeg"><p class="pie">Te quiero</p></div>
-                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (17).jpeg"><p class="pie">Inolvidable</p></div>
-            </div>
-        </section>
-
-        <section class="mes-seccion" id="mes3">
-            <h2 class="titulo-mes" data-aos="zoom-in">Mes 3: Cada Vez Más Unidos</h2>
-            <div class="galeria">
-                <div class="polaroid" data-aos="fade-up"><img src="IMG/fotos (12).jpeg"><p class="pie">Comfama</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="100"><img src="IMG/fotos (10).jpeg"><p class="pie">Mi lugar favorito</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="200"><img src="IMG/fotos (14).jpeg"><p class="pie">Vinito</p></div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="300"><img src="IMG/fotos (15).jpeg"><p class="pie">Momentos</p></div>
-                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="400"><img src="IMG/fotos (23).jpeg"><p class="pie">Pajarito</p></div>
-            </div>
-        </section>
-
-        <section class="mes-seccion" id="mes4">
-            <h2 class="titulo-mes" data-aos="fade-up">Mes 4: El Presente</h2>
-            
-            <div class="envelope-wrapper" data-aos="zoom-in" onclick="openEnvelope()">
-                <div class="envelope">
-                    <div class="letter">
-                        <p>Anita, gracias por estos 4 meses. Eres lo mejor de mi vida. ❤️</p>
-                    </div>
+            <div class="mes-header" data-aos="fade-right" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">01</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Nuestro Primer Suspiro</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
                 </div>
             </div>
 
-            <div class="misterio-card" data-aos="fade-up">
-                <div class="signo">?</div>
-                <p>Nuevos recuerdos por crear hoy...</p>
-                <button class="btn-custom" onclick="mensajeEspecial()">¿Quieres saber algo?</button>
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (5).jpeg" alt="El inicio">
+                        <p class="pie">El inicio</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (1).jpeg" alt="Tu sonrisa">
+                        <p class="pie">Tu sonrisa</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (3).jpeg" alt="Esa mirada">
+                        <p class="pie">Esa mirada</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (2).jpeg" alt="Manitos">
+                        <p class="pie">Manitos</p>
+                    </div>
+                </div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="320">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (7).jpeg" alt="Karaoke">
+                        <p class="pie">Karaoke</p>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <!-- ── MES 2 ────────────────────────── -->
+
+        <section class="mes-seccion mes-alt" id="mes2">
+            <div class="mes-header mes-header-right" data-aos="fade-left" data-aos-duration="800">
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Creciendo en Amor</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+                <div class="mes-number" aria-hidden="true">02</div>
+            </div>
+
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (20).jpeg" alt="">
+                        <p class="pie">👅</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (8).jpeg" alt="Días de sol">
+                        <p class="pie">Días de sol</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (9).jpeg" alt="Hermosa">
+                        <p class="pie">Hermosa</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (18).jpeg" alt="Te quiero">
+                        <p class="pie">Te quiero</p>
+                    </div>
+                </div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="320">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (17).jpeg" alt="Inolvidable">
+                        <p class="pie">Inolvidable</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── MES 3 ────────────────────────── -->
+
+        <section class="mes-seccion" id="mes3">
+            <div class="mes-header" data-aos="zoom-in" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">03</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Cada Vez Más Unidos</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <div class="galeria">
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (12).jpeg" alt="Comfama">
+                        <p class="pie">Comfama</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (10).jpeg" alt="Mi lugar favorito">
+                        <p class="pie">Mi lugar favorito</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (14).jpeg" alt="Vinito">
+                        <p class="pie">Vinito</p>
+                    </div>
+                </div>
+                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (15).jpeg" alt="Momentos">
+                        <p class="pie">Momentos</p>
+                    </div>
+                </div>
+                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="320">
+                    <div class="polaroid-inner">
+                        <img src="IMG/fotos (23).jpeg" alt="Pajarito">
+                        <p class="pie">Pajarito</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── MES 4 ────────────────────────── -->
+
+        <section class="mes-seccion mes-final" id="mes4">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">04</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">El Presente</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <!-- Envelope -->
+            <div class="envelope-wrapper" data-aos="zoom-in" data-aos-delay="100"
+                 onclick="openEnvelope()" role="button" tabindex="0"
+                 aria-label="Abrir carta">
+                <div class="envelope-flap" aria-hidden="true"></div>
+                <div class="envelope-body">
+                    <div class="envelope-heart" aria-hidden="true">
+                        <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50,85 C50,85 5,55 5,28 C5,14 16,5 27,5 C36,5 44,10 50,18 C56,10 64,5 73,5 C84,5 95,14 95,28 C95,55 50,85 50,85Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="letter" role="note">
+                    <p>Negrita, gracias por estos 4 meses. Eres lo mejor de mi vida. ❤️</p>
+                </div>
+            </div>
+
+            <!-- Mystery card -->
+            <div class="misterio-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="signo" aria-hidden="true">?</div>
+                <p>Nuevos recuerdos por crear hoy...</p>
+                <button class="btn-custom" onclick="mensajeEspecial()">
+                    <span>¿Quieres saber algo?</span>
+                    <i class="fas fa-star btn-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </section>
+
     </main>
+
+    <!-- Sunflower scene anchor -->
+    <div class="sunflower-scene" aria-hidden="true"></div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                Hecho con <span class="footer-heart">❤️</span> para Anita
+            </p>
+            <p class="footer-sub">Cada día contigo es el más bonito</p>
+        </div>
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="JS/index.js"></script>
 </body>
-</html>
+</html>>
