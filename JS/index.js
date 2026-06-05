@@ -13,7 +13,6 @@ const randInt = (a, b) => Math.floor(rand(a, b));
 const clamp   = (v, a, b) => Math.min(Math.max(v, a), b);
 const isMobile = () => window.innerWidth <= 560;
 
-<<<<<<< HEAD
 // Musica de fondo
 (function initBackgroundMusic() {
     const music = $('#bg-music');
@@ -33,17 +32,12 @@ const isMobile = () => window.innerWidth <= 560;
     });
 })();
 
-=======
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d
 // ── PAGE LOADER ─────────────────────────────
 (function initLoader() {
     const loader = $('#page-loader');
     if (!loader) return;
     const MIN_MS = 1100;
-<<<<<<< HEAD
     const MAX_MS = 2600;
-=======
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d
     const t0 = Date.now();
 
     function hideLoader() {
@@ -56,7 +50,6 @@ const isMobile = () => window.innerWidth <= 560;
     } else {
         window.addEventListener('load', hideLoader, { once: true });
     }
-<<<<<<< HEAD
 
     setTimeout(hideLoader, MAX_MS);
 })();
@@ -75,18 +68,6 @@ function initAosAnimations() {
 }
 
 initAosAnimations();
-=======
-})();
-
-// ── AOS ─────────────────────────────────────
-AOS.init({
-    duration: 850,
-    once:     true,
-    offset:   80,
-    easing:   'ease-out-cubic',
-    disable:  false,
-});
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d
 
 // ── CONTADOR REAL ────────────────────────────
 const FECHA_INICIO = new Date('February 08, 2026 00:00:00').getTime();
@@ -433,7 +414,6 @@ $$('.nav-item, .envelope-wrapper').forEach(el => {
             el.click();
         }
     });
-<<<<<<< HEAD
 });
 
 
@@ -450,6 +430,3 @@ function cerrarCartaLarga() {
         .getElementById("carta-modal")
         .classList.remove("active");
 }
-=======
-});
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d

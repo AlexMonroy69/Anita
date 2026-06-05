@@ -984,7 +984,6 @@ img {
     .theme-btn { width: 42px; height: 42px; font-size: 0.95rem; }
 
     /* Envelope */
-<<<<<<< HEAD
 .envelope-wrapper{
     width: min(300px, 88vw);
     margin: 0 auto;
@@ -1013,15 +1012,6 @@ img {
 
     z-index: 5;
 }
-=======
-    .envelope-wrapper { width: 88vw; }
-    .envelope-body { height: 160px; }
-    .envelope-flap {
-        border-left-width:  calc(88vw / 2);
-        border-right-width: calc(88vw / 2);
-        border-top-width:   95px;
-    }
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d
 
     /* Mystery card */
     .misterio-card { padding: 36px 22px; }
@@ -1176,7 +1166,6 @@ img {
 
 .envelope-wrapper {
     position: relative;
-<<<<<<< HEAD
 }
 
 .carta-modal{
@@ -1252,6 +1241,4 @@ img {
 .letter{
     width: calc(100% - 32px);
     left: 16px;
-=======
->>>>>>> ea520cdf0f42b5e9d4abda21dfc756933c5d0a8d
 }
