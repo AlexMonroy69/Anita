@@ -238,9 +238,14 @@ img {
     border: 1px solid var(--nav-border);
     transition: transform 0.5s var(--ease-smooth),
                 opacity 0.5s var(--ease-smooth);
-    /* Prevent it from being wider than screen */
+    /* Prevent it from being wider than screen; scroll horizontally as a fallback
+       so extra nav items never wrap or force the pill to overflow the viewport */
     max-width: calc(100vw - 32px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+.nav-container::-webkit-scrollbar { display: none; }
 .nav-hidden {
     transform: translateX(-50%) translateY(120px);
     opacity: 0;
@@ -665,8 +670,30 @@ img {
 /* BODY */
 .envelope-body {
     position: relative;
+    overflow: hidden;
+
+    margin-top: 110px;
+
+    width: 100%;
+    height: 180px;
+
+    background: linear-gradient(
+        160deg,
+        var(--rosa-light) 0%,
+        var(--rosa) 100%
+    );
+
+    border-radius: 0 0 14px 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     z-index: 1;
-    overflow: visible;
+
+    box-shadow:
+        0 10px 36px rgba(255,77,109,0.38),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.08);
 }
 
 /* FLAP */
@@ -708,7 +735,7 @@ img {
         translate(-50%, -50%)
         translateZ(200px);
 
-    z-index: 99999;
+    z-index: 8;
 
     display: flex;
     align-items: center;
@@ -720,41 +747,15 @@ img {
 
     animation: envelopeBeat 1.5s ease-in-out infinite;
 }
-/* BODY */
-.envelope-body {
-    position: relative;
-    overflow: visible;
-
-    margin-top: 110px;
-
-    width: 300px;
-    height: 180px;
-
-    background: linear-gradient(
-        160deg,
-        var(--rosa-light) 0%,
-        var(--rosa) 100%
-    );
-
-    border-radius: 0 0 14px 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 1;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 10px 36px rgba(255,77,109,0.38),
-        inset 0 -3px 0 rgba(0, 0, 0, 0.08);
-}
+.envelope-heart svg { width: 100%; height: 100%; }
+.envelope-heart path { fill: white; }
 
 /* OPEN */
 .envelope-wrapper.open .envelope-flap {
     transform: rotateX(180deg);
 }
+
+/* LETTER */
 .letter {
     position: absolute;
     left: 8%; width: 84%;
@@ -983,35 +984,8 @@ img {
     /* Theme btn */
     .theme-btn { width: 42px; height: 42px; font-size: 0.95rem; }
 
-    /* Envelope */
-.envelope-wrapper{
-    width: min(300px, 88vw);
-    margin: 0 auto;
-}
-
-.envelope-body{
-    width: 100%;
-    height: 180px;
-    position: relative;
-}
-
-.envelope-flap{
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 110px;
-
-    background: var(--magenta);
-
-    clip-path: polygon(0 0, 100% 0, 50% 85%);
-
-    transform-origin: top center;
-    transition: transform .8s ease;
-
-    z-index: 5;
-}
+    /* Envelope: give the letter a touch more room on narrow screens */
+    .letter { width: calc(100% - 32px); left: 16px; }
 
     /* Mystery card */
     .misterio-card { padding: 36px 22px; }
@@ -1049,125 +1023,7 @@ img {
 /* ── AOS PERFORMANCE ───────────────────────── */
 [data-aos] { will-change: transform, opacity; }
 
-
-.envelope-body svg,
-.envelope-body i,
-.envelope-body .heart,
-.envelope-body .icon-heart {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 10;
-
-    width: 54px;
-    height: 54px;
-
-    filter: drop-shadow(0 0 14px rgba(255,255,255,0.55));
-
-    animation: envelopeBeat 1.5s ease-in-out infinite;
-}
-
-/* CUERPO DEL SOBRE */
-.envelope-body {
-    background: linear-gradient(160deg, var(--rosa-light) 0%, var(--rosa) 100%);
-    height: 180px;
-    border-radius: 0 0 14px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-        0 10px 36px rgba(255,77,109,0.38),
-        inset 0 -3px 0 rgba(0,0,0,0.08);
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-/* CORAZÓN */
-.envelope-heart {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%) translateZ(100px);
-
-    width: 54px;
-    height: 54px;
-
-    z-index: 99999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    pointer-events: none;
-
-    filter: drop-shadow(0 0 14px rgba(255,255,255,0.55));
-
-    animation: envelopeBeat 1.5s ease-in-out infinite;
-    
-    .envelope-body {
-    position: relative;
-    z-index: 1;
-}
-}
-
-/* CARTA */
-.letter {
-    z-index: 5;
-}
-
-.envelope-heart svg {
-    width: 100%;
-    height: 100%;
-}
-
-.envelope-heart path {
-    fill: white;
-}
-
-/* CARTA */
-.letter {
-    position: absolute;
-    left: 8%;
-    width: 84%;
-    background: var(--blanco);
-    padding: 16px 18px;
-    border-radius: 8px;
-    font-family: var(--font-display);
-    text-align: center;
-    color: var(--text-color);
-    font-size: 1.04rem;
-    line-height: 1.55;
-    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
-
-    top: 38px;
-
-    z-index: 5;
-
-    transition:
-        transform 0.65s var(--ease-spring),
-        opacity 0.45s var(--ease-smooth);
-
-    transform: translateY(0) scale(0.96);
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* CUANDO SE ABRE */
-.envelope-wrapper.open .letter {
-    transform: translateY(-84px) scale(1);
-    opacity: 1;
-}
-
-.envelope-wrapper {
-    position: relative;
-}
-
+/* ── CARTICA MODAL ──────────────────────────── */
 .carta-modal{
     position: fixed;
     inset: 0;
@@ -1236,9 +1092,4 @@ img {
         transform: translateY(0);
         opacity: 1;
     }
-}
-
-.letter{
-    width: calc(100% - 32px);
-    left: 16px;
 }
