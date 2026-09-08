@@ -429,3 +429,447 @@ function abrirCartaLarga() {
 function cerrarCartaLarga() {
     document.getElementById("carta-modal").classList.remove("active");
 }
+
+// ══════════════════════════════════════════════
+// GALAXIA · 100 estrellas, 100 frases (Three.js)
+// ══════════════════════════════════════════════
+(function initGalaxia() {
+    const contenedor = document.getElementById('galaxia-contenedor');
+    const canvas      = document.getElementById('galaxia-canvas');
+    const cargando    = document.getElementById('galaxia-cargando');
+    const mensajeBox  = document.getElementById('galaxia-mensaje');
+    const mensajeTxt  = document.getElementById('galaxia-mensaje-texto');
+    if (!contenedor || !canvas) return;
+
+    // ── 100 frases, generadas de una combinación de 10x10 ──
+    const APERTURAS = [
+        'Contigo,',
+        'A tu lado,',
+        'Desde que estamos juntos,',
+        'Cada vez que te veo,',
+        'En cada mes que pasa,',
+        'Aunque no lo diga siempre,',
+        'Sin importar el día,',
+        'Entre risas y silencios,',
+        'Como los girasoles,',
+        'En esta historia nuestra,',
+    ];
+    const CIERRES = [
+        'sé que elegí bien.',
+        'el tiempo se siente distinto.',
+        'encuentro un motivo más para sonreír.',
+        'aprendo que el amor también es paciencia.',
+        'confirmo que eres mi lugar favorito.',
+        'sigo agradecido de tenerte.',
+        'las cosas simples se sienten especiales.',
+        'me siento en casa.',
+        'florezco un poco más.',
+        'quiero seguir escribiendo capítulos contigo.',
+    ];
+    const FRASES = [];
+    for (let i = 0; i < APERTURAS.length; i++) {
+        for (let j = 0; j < CIERRES.length; j++) {
+            FRASES.push(`${APERTURAS[i]} ${CIERRES[j]}`);
+        }
+    }
+
+    function mostrarMensajeGalaxia(texto) {
+        if (!mensajeBox || !mensajeTxt) return;
+        mensajeTxt.textContent = texto;
+        mensajeBox.hidden = false;
+        burstHearts(4);
+    }
+
+    window.cerrarMensajeGalaxia = function () {
+        if (mensajeBox) mensajeBox.hidden = true;
+    };
+
+    // Si Three.js no cargó (sin internet, CDN bloqueado, etc.) mostramos aviso simple
+    if (typeof THREE === 'undefined') {
+        if (cargando) {
+            cargando.querySelector('span:last-child').textContent =
+                'No se pudo cargar la galaxia (revisa tu conexión).';
+        }
+        return;
+    }
+
+    let scene, camera, renderer, galaxyGroup;
+    let W = contenedor.clientWidth, H = contenedor.clientHeight;
+    let isDragging = false;
+    let hasDraggedMuch = false;
+    let lastX = 0, lastY = 0;
+    let rotX = 0.15, rotY = 0;
+    let autoRotate = true;
+    const stars = [];
+
+    // Estrella "power star" (tipo Mario 64): 5 puntas, carita con ojos grandes
+    function crearTexturaEstrella() {
+        const size = 256;
+        const mid  = size / 2;
+        const c = document.createElement('canvas');
+        c.width = c.height = size;
+        const ctx = c.getContext('2d');
+
+        const outerR = size * 0.44;
+        const innerR = outerR * 0.42;
+
+        ctx.save();
+        ctx.translate(mid, mid);
+
+        // Sombra suave detrás de la estrella para que resalte del cielo
+        ctx.shadowColor = 'rgba(120,70,0,0.55)';
+        ctx.shadowBlur = size * 0.05;
+
+        // Silueta de 5 puntas
+        ctx.beginPath();
+        for (let i = 0; i < 10; i++) {
+            const r = i % 2 === 0 ? outerR : innerR;
+            const a = -Math.PI / 2 + i * Math.PI / 5;
+            const x = r * Math.cos(a), y = r * Math.sin(a);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+
+        const relleno = ctx.createRadialGradient(0, -outerR * 0.1, outerR * 0.08, 0, 0, outerR);
+        relleno.addColorStop(0,    '#fff6c2');
+        relleno.addColorStop(0.5,  '#ffd93b');
+        relleno.addColorStop(1,    '#f7a300');
+        ctx.fillStyle = relleno;
+        ctx.fill();
+
+        ctx.shadowColor = 'transparent';
+        ctx.lineWidth = outerR * 0.075;
+        ctx.strokeStyle = '#8a4d00';
+        ctx.stroke();
+
+        // Ojos grandes y traviesos, mirando hacia un lado (como el Power Star)
+        const eyeCx = outerR * 0.24;
+        const eyeCy = -outerR * 0.06;
+        const eyeW  = outerR * 0.34;
+        const eyeH  = outerR * 0.4;
+
+        [-1, 1].forEach((dir) => {
+            ctx.save();
+            ctx.translate(dir * eyeCx, eyeCy);
+            ctx.rotate(dir * 0.15);
+
+            // blanco del ojo
+            ctx.beginPath();
+            ctx.ellipse(0, 0, eyeW / 2, eyeH / 2, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#fffdf5';
+            ctx.fill();
+            ctx.lineWidth = outerR * 0.028;
+            ctx.strokeStyle = '#5c3200';
+            ctx.stroke();
+
+            // pupila mirando hacia afuera y arriba (viveza tipo Mario)
+            ctx.beginPath();
+            ctx.arc(dir * eyeW * 0.16, -eyeH * 0.06, eyeW * 0.24, 0, Math.PI * 2);
+            ctx.fillStyle = '#241300';
+            ctx.fill();
+
+            // brillito
+            ctx.beginPath();
+            ctx.arc(dir * eyeW * 0.16 - dir * eyeW * 0.11, -eyeH * 0.06 - eyeH * 0.14, eyeW * 0.08, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            ctx.restore();
+        });
+
+        // Cachetitos sonrosados
+        [-1, 1].forEach((dir) => {
+            ctx.beginPath();
+            ctx.ellipse(dir * outerR * 0.34, outerR * 0.2, outerR * 0.09, outerR * 0.06, 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,140,140,0.35)';
+            ctx.fill();
+        });
+
+        // Sonrisita
+        ctx.beginPath();
+        ctx.arc(0, outerR * 0.14, outerR * 0.16, 0.12 * Math.PI, 0.88 * Math.PI);
+        ctx.lineWidth = outerR * 0.05;
+        ctx.strokeStyle = '#5c3200';
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        ctx.restore();
+
+        const tex = new THREE.CanvasTexture(c);
+        tex.needsUpdate = true;
+        return tex;
+    }
+
+    // Ruta del modelo 3D real de la estrella (si el usuario la proporcionó).
+    // Si no se puede cargar (sin internet, archivo faltante, etc.) se usa
+    // el dibujo 2D de respaldo, así la galaxia nunca se rompe.
+    const MODELO_ESTRELLA_URL = 'MODELOS/estrella-mario.glb';
+
+    // ── Respaldo: estrellas dibujadas en canvas 2D (si el modelo 3D falla) ──
+    function construirEstrellasConSprite() {
+        const starTex = crearTexturaEstrella();
+        for (let i = 0; i < FRASES.length; i++) {
+            const radius = 6 + Math.random() * 32;
+            const angle  = Math.random() * Math.PI * 2 + radius * 0.16;
+            const alt    = (Math.random() - 0.5) * 7 * (1 - radius / 40);
+
+            const tono   = Math.random();
+            const color  = new THREE.Color().lerpColors(
+                new THREE.Color(0xffffff), new THREE.Color(0xfff0b8), tono
+            );
+            const mat = new THREE.SpriteMaterial({
+                map: starTex, color, transparent: true, opacity: 1,
+                depthWrite: false,
+            });
+            const star = new THREE.Sprite(mat);
+
+            star.position.set(radius * Math.cos(angle), alt, radius * Math.sin(angle));
+            star.userData.frase = FRASES[i];
+            star.userData.phase = Math.random() * Math.PI * 2;
+            star.userData.tipo = 'sprite';
+            star.userData.baseScale = 2.1 + Math.random() * 1.6;
+            star.scale.set(star.userData.baseScale, star.userData.baseScale, 1);
+
+            galaxyGroup.add(star);
+            stars.push(star);
+        }
+    }
+
+    // ── Estrellas hechas con el modelo 3D real (super_mario_star.glb) ──
+    function construirEstrellasConModelo(plantilla) {
+        const caja = new THREE.Box3().setFromObject(plantilla);
+        const centro = caja.getCenter(new THREE.Vector3());
+        const tam = caja.getSize(new THREE.Vector3());
+        const dimensionMax = Math.max(tam.x, tam.y, tam.z) || 1;
+        const escalaBase = 3.6 / dimensionMax; // tamaño objetivo en unidades del mundo
+
+        for (let i = 0; i < FRASES.length; i++) {
+            const radius = 6 + Math.random() * 32;
+            const angle  = Math.random() * Math.PI * 2 + radius * 0.16;
+            const alt    = (Math.random() - 0.5) * 7 * (1 - radius / 40);
+
+            const clon = plantilla.clone(true);
+            clon.traverse((o) => {
+                if (o.isMesh && o.material) {
+                    o.material = o.material.clone();
+                    if (o.material.color) {
+                        o.material.color.lerp(new THREE.Color(0xfff0b8), Math.random() * 0.3);
+                    }
+                }
+            });
+            clon.position.sub(centro); // centramos el pivote en el propio modelo
+
+            const wrapper = new THREE.Group();
+            wrapper.add(clon);
+            wrapper.position.set(radius * Math.cos(angle), alt, radius * Math.sin(angle));
+            // Rotación inicial suave: mantenemos la carita mirando casi de
+            // frente (el modelo es bastante plano y de perfil se ve como
+            // una rayita), y giramos sobre su propio eje como un molinillo.
+            wrapper.rotation.y = (Math.random() - 0.5) * 0.5;
+            wrapper.rotation.x = (Math.random() - 0.5) * 0.25;
+            wrapper.rotation.z = Math.random() * Math.PI * 2;
+
+            wrapper.userData.frase = FRASES[i];
+            wrapper.userData.phase = Math.random() * Math.PI * 2;
+            wrapper.userData.tipo = 'modelo';
+            wrapper.userData.spinSpeed = 0.004 + Math.random() * 0.008;
+            wrapper.userData.baseScale = escalaBase * (0.85 + Math.random() * 0.55);
+            wrapper.scale.setScalar(wrapper.userData.baseScale);
+
+            galaxyGroup.add(wrapper);
+            stars.push(wrapper);
+        }
+    }
+
+    // Carga el modelo 3D; si falla por cualquier motivo, cae al dibujo 2D.
+    function cargarEstrellas() {
+        const ocultarCarga = () => { if (cargando) cargando.classList.add('oculto'); };
+
+        if (typeof THREE.GLTFLoader !== 'function') {
+            construirEstrellasConSprite();
+            ocultarCarga();
+            return;
+        }
+
+        try {
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+                MODELO_ESTRELLA_URL,
+                (gltf) => {
+                    try {
+                        construirEstrellasConModelo(gltf.scene);
+                    } catch (err) {
+                        construirEstrellasConSprite();
+                    }
+                    ocultarCarga();
+                },
+                undefined,
+                () => { construirEstrellasConSprite(); ocultarCarga(); }
+            );
+        } catch (err) {
+            construirEstrellasConSprite();
+            ocultarCarga();
+        }
+    }
+
+    function initScene() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 1000);
+        camera.position.set(0, 10, 62);
+        camera.lookAt(0, 0, 0);
+
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(W, H);
+
+        galaxyGroup = new THREE.Group();
+        scene.add(galaxyGroup);
+
+        // Luces: el modelo 3D de la estrella necesita luz para verse bien
+        // (el dibujo 2D de respaldo no las usa, pero no le hacen daño).
+        scene.add(new THREE.AmbientLight(0xfff2c9, 0.9));
+        const luzDireccional = new THREE.DirectionalLight(0xffffff, 1.1);
+        luzDireccional.position.set(15, 25, 20);
+        scene.add(luzDireccional);
+        const luzCalida = new THREE.PointLight(0xffd27a, 0.6, 200);
+        luzCalida.position.set(-20, -10, 30);
+        scene.add(luzCalida);
+
+        galaxyGroup.rotation.x = rotX;
+    }
+
+    function resize() {
+        W = contenedor.clientWidth;
+        H = contenedor.clientHeight;
+        if (!W || !H || !renderer) return;
+        camera.aspect = W / H;
+        camera.updateProjectionMatrix();
+        renderer.setSize(W, H);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Buscamos la estrella más cercana al punto donde se tocó, con un
+    // margen de tolerancia generoso — así no hay que acertarle al pixel
+    // exacto del destello para poder leer su mensaje.
+    const _vecProy = new THREE.Vector3();
+    const UMBRAL_CLIC_PX = 26;
+
+    function proyectarAPixeles(star, rect) {
+        _vecProy.copy(star.position);
+        _vecProy.applyMatrix4(galaxyGroup.matrixWorld);
+        _vecProy.project(camera);
+        return {
+            x: (_vecProy.x * 0.5 + 0.5) * rect.width + rect.left,
+            y: (-_vecProy.y * 0.5 + 0.5) * rect.height + rect.top,
+            detrasCamara: _vecProy.z > 1,
+        };
+    }
+
+    function encontrarEstrellaCercana(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        galaxyGroup.updateMatrixWorld();
+        let mejor = null, mejorDist = Infinity;
+        stars.forEach(star => {
+            const p = proyectarAPixeles(star, rect);
+            if (p.detrasCamara) return;
+            const dx = p.x - clientX, dy = p.y - clientY;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < mejorDist) { mejorDist = d; mejor = star; }
+        });
+        return mejorDist <= UMBRAL_CLIC_PX ? mejor : null;
+    }
+
+    function onPointerDown(e) {
+        isDragging = true;
+        hasDraggedMuch = false;
+        autoRotate = false;
+        lastX = e.clientX; lastY = e.clientY;
+        try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    function onPointerMove(e) {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasDraggedMuch = true;
+        rotY += dx * 0.006;
+        rotX = clamp(rotX + dy * 0.006, -1.1, 1.1);
+        lastX = e.clientX; lastY = e.clientY;
+        e.preventDefault();
+    }
+
+    function onPointerUp(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        setTimeout(() => { autoRotate = true; }, 2200);
+
+        if (!hasDraggedMuch) {
+            const estrella = encontrarEstrellaCercana(e.clientX, e.clientY);
+            if (estrella) mostrarMensajeGalaxia(estrella.userData.frase);
+        }
+    }
+
+    function onWheel(e) {
+        e.preventDefault();
+        camera.position.z = clamp(camera.position.z + e.deltaY * 0.04, 30, 110);
+    }
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('pointerup', onPointerUp);
+    canvas.addEventListener('pointercancel', () => { isDragging = false; });
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+
+    let started = false;
+    function startAnimation() {
+        if (started) return;
+        started = true;
+        let t = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            t += 0.016;
+            if (autoRotate && !isDragging) rotY += 0.0015;
+            galaxyGroup.rotation.y = rotY;
+            galaxyGroup.rotation.x = rotX;
+
+            stars.forEach(star => {
+                const twinkle = 0.75 + 0.25 * Math.sin(t * 1.4 + star.userData.phase);
+                if (star.userData.tipo === 'modelo') {
+                    star.rotation.z += star.userData.spinSpeed;
+                    star.scale.setScalar(star.userData.baseScale * (0.94 + 0.06 * twinkle));
+                } else {
+                    star.material.opacity = twinkle;
+                    star.scale.setScalar(star.userData.baseScale * (0.9 + 0.1 * twinkle));
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    }
+
+    // Solo inicializamos cuando la sección entra en pantalla (ahorra recursos)
+    let booted = false;
+    function boot() {
+        if (booted) return;
+        booted = true;
+        try {
+            initScene();
+            resize();
+            startAnimation();
+            cargarEstrellas();
+        } catch (err) {
+            if (cargando) cargando.querySelector('span:last-child').textContent =
+                'No se pudo mostrar la galaxia en este dispositivo.';
+        }
+    }
+
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { boot(); io.disconnect(); } });
+        }, { threshold: 0.15 });
+        io.observe(contenedor);
+    } else {
+        boot();
+    }
+})();

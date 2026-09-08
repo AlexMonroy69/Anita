@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/index.css?v=7">
+    <link rel="stylesheet" href="CSS/index.css?v=8">
 </head>
 <body data-theme="dark">
 
@@ -72,6 +72,10 @@
         <div class="nav-item" onclick="scrollToSection('buzon')" role="button" tabindex="0">
             <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
             <span class="nav-text">Buzón</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('galaxia')" role="button" tabindex="0">
+            <i class="fas fa-meteor" aria-hidden="true"></i>
+            <span class="nav-text">Galaxia</span>
         </div>
     </nav>
 
@@ -429,6 +433,37 @@
             </div>
         </section>
 
+        <!-- ── GALAXIA · 100 estrellas, 100 frases ──── -->
+        <section class="mes-seccion galaxia-seccion" id="galaxia">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Nuestra Galaxia</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+            <p class="galaxia-intro" data-aos="fade-up" data-aos-delay="80">
+                100 estrellas, 100 razones para quererte. Arrastra para girar la galaxia y toca una estrella para leer su mensaje.
+            </p>
+
+            <div class="galaxia-contenedor" id="galaxia-contenedor" data-aos="zoom-in" data-aos-delay="150">
+                <canvas id="galaxia-canvas"></canvas>
+
+                <div class="galaxia-cargando" id="galaxia-cargando">
+                    <span class="galaxia-cargando-icono">🌌</span>
+                    <span>Encendiendo estrellas...</span>
+                </div>
+
+                <div class="galaxia-mensaje" id="galaxia-mensaje" hidden>
+                    <div class="galaxia-mensaje-caja">
+                        <span class="galaxia-mensaje-estrella">⭐</span>
+                        <p id="galaxia-mensaje-texto"></p>
+                        <button type="button" class="galaxia-cerrar" onclick="cerrarMensajeGalaxia()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+            <p class="galaxia-hint">✦ arrastra para explorar · toca una estrella ✦</p>
+        </section>
+
     </main>
 
     <div class="sunflower-scene" aria-hidden="true"></div>
@@ -485,6 +520,8 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="JS/index.js?v=6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="JS/index.js?v=12"></script>
 </body>
 </html>
