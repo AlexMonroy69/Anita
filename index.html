@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#fff0f3">
-    <title>Nuestra Historia - Anita ❤️</title>
+    <meta name="theme-color" content="#fffaf0">
+    <title>Nuestra Historia - Anita 🌻</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,19 +23,15 @@
     <div class="orb orb-2" aria-hidden="true"></div>
     <div class="orb orb-3" aria-hidden="true"></div>
 
-    <!-- Hearts layer -->
+    <!-- Hearts + petals layer -->
     <div id="hearts-container" aria-hidden="true"></div>
 
-    <!-- Sunflowers layer -->
+    <!-- Sunflowers layer (escena final) -->
     <div id="sunflowers-container" aria-hidden="true"></div>
 
     <!-- Page loader -->
     <div id="page-loader" role="status" aria-label="Cargando">
-        <div class="loader-heart">
-            <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50,85 C50,85 5,55 5,28 C5,14 16,5 27,5 C36,5 44,10 50,18 C56,10 64,5 73,5 C84,5 95,14 95,28 C95,55 50,85 50,85Z"/>
-            </svg>
-        </div>
+        <div class="loader-heart"></div>
         <p class="loader-text">Cargando nuestra historia...</p>
     </div>
 
@@ -74,6 +70,10 @@
             <i class="fas fa-infinity" aria-hidden="true"></i>
             <span class="nav-text">Mes 6</span>
         </div>
+        <div class="nav-item" onclick="scrollToSection('mes7')" role="button" tabindex="0">
+            <i class="fas fa-seedling" aria-hidden="true"></i>
+            <span class="nav-text">Mes 7</span>
+        </div>
     </nav>
 
     <!-- ═══════════════════════════════════════
@@ -81,10 +81,13 @@
     ═══════════════════════════════════════ -->
     <header class="hero" id="inicio">
         <div class="hero-bg-glow" aria-hidden="true"></div>
+        <div class="hero-sunflowers" aria-hidden="true">
+            <span>🌻</span><span>🌻</span><span>🌻</span><span>🌻</span>
+        </div>
 
         <div class="hero-content">
             <div class="hero-label" data-aos="fade-down" data-aos-duration="800">
-                ✦ nuestra historia ✦
+                nuestra historia
             </div>
 
             <h1 class="glow" data-aos="zoom-in" data-aos-duration="1100">Anita</h1>
@@ -118,7 +121,6 @@
     <main class="contenedor">
 
         <!-- ── MES 1 ────────────────────────── -->
-
         <section class="mes-seccion" id="mes1">
             <div class="mes-header" data-aos="fade-right" data-aos-duration="800">
                 <div class="mes-number" aria-hidden="true">01</div>
@@ -157,7 +159,6 @@
         </section>
 
         <!-- ── MES 2 ────────────────────────── -->
-
         <section class="mes-seccion mes-alt" id="mes2">
             <div class="mes-header mes-header-right" data-aos="fade-left" data-aos-duration="800">
                 <div class="mes-title-block">
@@ -196,7 +197,6 @@
         </section>
 
         <!-- ── MES 3 ────────────────────────── -->
-
         <section class="mes-seccion" id="mes3">
             <div class="mes-header" data-aos="zoom-in" data-aos-duration="800">
                 <div class="mes-number" aria-hidden="true">03</div>
@@ -235,7 +235,6 @@
         </section>
 
         <!-- ── MES 4 ────────────────────────── -->
-
         <section class="mes-seccion" id="mes4">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
                 <div class="mes-number" aria-hidden="true">04</div>
@@ -274,7 +273,6 @@
         </section>
 
         <!-- ── MES 5 ────────────────────────── -->
-
         <section class="mes-seccion mes-alt" id="mes5">
             <div class="mes-header mes-header-right" data-aos="fade-left" data-aos-duration="800">
                 <div class="mes-title-block">
@@ -307,8 +305,7 @@
         </section>
 
         <!-- ── MES 6 ────────────────────────── -->
-
-        <section class="mes-seccion mes-final" id="mes6">
+        <section class="mes-seccion" id="mes6">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
                 <div class="mes-number" aria-hidden="true">06</div>
                 <div class="mes-title-block">
@@ -340,6 +337,71 @@
                     <div class="polaroid-inner">
                         <img src="IMG/5 (4).jpeg" alt="Nuestra manera de amar">
                         <p class="pie">Nuestra manera de amar</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── MES 7 ─ Cartas de costumbre ──── -->
+        <section class="mes-seccion mes-final" id="mes7">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">07</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Nuestras Costumbres</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <div class="costumbre-grid">
+                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="0" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: buenos días">
+                    <div class="costumbre-card-inner">
+                        <div class="costumbre-front">
+                            <span class="costumbre-icono">☀️</span>
+                            <span class="costumbre-titulo">Buenos días</span>
+                            <span class="costumbre-tap">toca para leer</span>
+                        </div>
+                        <div class="costumbre-back">
+                            <p>Cada mañana empieza contigo en mis pensamientos, aunque sea con un simple "buenos días, negrita".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="80" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: la llamada de la tarde">
+                    <div class="costumbre-card-inner">
+                        <div class="costumbre-front">
+                            <span class="costumbre-icono">📞</span>
+                            <span class="costumbre-titulo">La llamada</span>
+                            <span class="costumbre-tap">toca para leer</span>
+                        </div>
+                        <div class="costumbre-back">
+                            <p>Esa costumbre de contarnos cómo nos fue en el día, aunque no haya pasado nada especial.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="160" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: risas tontas">
+                    <div class="costumbre-card-inner">
+                        <div class="costumbre-front">
+                            <span class="costumbre-icono">😄</span>
+                            <span class="costumbre-titulo">Risas tontas</span>
+                            <span class="costumbre-tap">toca para leer</span>
+                        </div>
+                        <div class="costumbre-back">
+                            <p>Nuestra costumbre favorita: reírnos de tonterías que solo nosotros entendemos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="240" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: buenas noches">
+                    <div class="costumbre-card-inner">
+                        <div class="costumbre-front">
+                            <span class="costumbre-icono">🌙</span>
+                            <span class="costumbre-titulo">Buenas noches</span>
+                            <span class="costumbre-tap">toca para leer</span>
+                        </div>
+                        <div class="costumbre-back">
+                            <p>No importa qué tan cansados estemos, siempre nos decimos buenas noches antes de dormir.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -386,50 +448,49 @@
             <p class="footer-sub">Cada día contigo es el más bonito</p>
         </div>
 
-<button class="btn-custom" onclick="abrirCartaLarga()">
-    <span>Cartica❤️</span>
-</button>
-
+        <button class="btn-custom" onclick="abrirCartaLarga()">
+            <span>Cartica❤️</span>
+        </button>
     </footer>
 
-<div id="carta-modal" class="carta-modal">
-    <div class="carta-contenido">
-        <span class="cerrar-carta" onclick="cerrarCartaLarga()">&times;</span>
+    <div id="carta-modal" class="carta-modal">
+        <div class="carta-contenido">
+            <span class="cerrar-carta" onclick="cerrarCartaLarga()">&times;</span>
 
-        <h2>Para Mi Negrita ❤️</h2>
+            <h2>Para Mi Negrita ❤️</h2>
 
-        <p>
-            Mi negrita,
-            <br><br>
+            <p>
+                Mi negrita,
+                <br><br>
 
-            Quiero que sepas que contigo el tiempo se siente distinto: los días
-            buenos se sienten mejores y los días difíciles se vuelven más
-            livianos solo por tenerte cerca.
+                Quiero que sepas que contigo el tiempo se siente distinto: los días
+                buenos se sienten mejores y los días difíciles se vuelven más
+                livianos solo por tenerte cerca.
 
-            <br><br>
+                <br><br>
 
-            Me gusta la forma en la que te ríes de tus propios chistes, la
-            manera en la que me cuentas tu día con todos los detalles, y esas
-            pequeñas costumbres que ya son nuestras sin que nos diéramos cuenta.
+                Me gusta la forma en la que te ríes de tus propios chistes, la
+                manera en la que me cuentas tu día con todos los detalles, y esas
+                pequeñas costumbres que ya son nuestras sin que nos diéramos cuenta.
 
-            <br><br>
+                <br><br>
 
-            No necesito una fecha especial para escribirte esto: solo quería
-            recordarte que eres importante para mí, que valoro cada momento
-            que construimos juntos y que sigo eligiéndote, un día a la vez.
+                No necesito una fecha especial para escribirte esto: solo quería
+                recordarte que eres importante para mí, que valoro cada momento
+                que construimos juntos y que sigo eligiéndote, un día a la vez.
 
-            <br><br>
+                <br><br>
 
-            Gracias por acompañarme, por tu paciencia, por tus abrazos y por
-            hacer de lo cotidiano algo bonito.
+                Gracias por acompañarme, por tu paciencia, por tus abrazos y por
+                hacer de lo cotidiano algo bonito.
 
-            <br><br>
+                <br><br>
 
-            Te quiero muchísimo ❤️
-        </p>
+                Te quiero muchísimo ❤️
+            </p>
+        </div>
     </div>
-</div>
-
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="JS/index.js"></script>
 </body>

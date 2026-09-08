@@ -1,5 +1,5 @@
 /* ============================================
-   NUESTRA HISTORIA – Romantic JS
+   NUESTRA HISTORIA – Atardecer de Girasoles JS
    Fixed layout + full mobile support
    ============================================ */
 
@@ -57,16 +57,8 @@ const isMobile = () => window.innerWidth <= 560;
 // ── AOS ─────────────────────────────────────
 function initAosAnimations() {
     if (!window.AOS) return;
-
-    AOS.init({
-        duration: 850,
-        once:     true,
-        offset:   80,
-        easing:   'ease-out-cubic',
-        disable:  false,
-    });
+    AOS.init({ duration: 850, once: true, offset: 80, easing: 'ease-out-cubic', disable: false });
 }
-
 initAosAnimations();
 
 // ── CONTADOR REAL ────────────────────────────
@@ -88,78 +80,86 @@ function updateCounter() {
 updateCounter();
 setInterval(updateCounter, 1000);
 
-// ── FLOATING HEARTS ─────────────────────────
-const heartsContainer = $('#hearts-container');
+// ── LLUVIA CONTINUA: corazones + girasoles juntos ────
+const rainContainer = $('#hearts-container');
 
-const HEART_COLORS = [
-    '#ff4d6d','#b01e47','#ff7b94',
-    '#ff99aa','#d4275c','#ffccd5',
-    '#ff3366','#c0395f',
-];
+const HEART_COLORS = ['#e63950', '#b4192f', '#ff7a8f', '#ffb3c0', '#d1264a'];
 
 const HEART_SVG = `<svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
   <path d="M50,85 C50,85 5,55 5,28 C5,14 16,5 27,5 C36,5 44,10 50,18 C56,10 64,5 73,5 C84,5 95,14 95,28 C95,55 50,85 50,85Z"/>
 </svg>`;
 
-let activeHearts = 0;
-const MAX_HEARTS = isMobile() ? 10 : 18;
-let heartTimer   = null;
+let activeRain = 0;
+const MAX_RAIN = isMobile() ? 14 : 24;
+let rainTimer = null;
 
-function spawnHeart() {
-    if (!heartsContainer || activeHearts >= MAX_HEARTS) return;
-    activeHearts++;
+function spawnRainItem(kind) {
+    if (!rainContainer || activeRain >= MAX_RAIN) return;
+    activeRain++;
 
-    const el      = document.createElement('div');
-    el.className  = 'floating-heart';
-    const size    = rand(13, 34);
-    const color   = HEART_COLORS[randInt(0, HEART_COLORS.length)];
-    const opacity = rand(0.25, 0.65);
-    const drift   = `${rand(-70, 70)}px`;
-    const spin    = `${rand(-330, 330)}deg`;
-    const scale   = rand(0.6, 1.4);
-    const dur     = rand(5500, 10000);
+    const el = document.createElement('div');
+    el.className = 'rain-item';
+
+    const opacity = rand(0.35, 0.75);
+    const drift   = `${rand(-80, 80)}px`;
+    const spin    = `${rand(-360, 360)}deg`;
+    const scale   = rand(0.7, 1.3);
+    const dur     = rand(6000, 11000);
     const x       = rand(2, 96);
 
-    el.style.cssText = `
-        left: ${x}vw;
-        width: ${size}px; height: ${size}px;
-        --heart-opacity: ${opacity};
-        --drift: ${drift};
-        --spin: ${spin};
-        --end-scale: ${scale};
-        animation-duration: ${dur}ms;
-    `;
-    el.innerHTML = HEART_SVG;
-    const path = el.querySelector('path');
-    if (path) path.style.fill = color;
+    if (kind === 'heart') {
+        const size  = rand(13, 32);
+        const color = HEART_COLORS[randInt(0, HEART_COLORS.length)];
+        el.style.cssText = `
+            left: ${x}vw; width: ${size}px; height: ${size}px;
+            --r-opacity: ${opacity}; --drift: ${drift}; --spin: ${spin}; --end-scale: ${scale};
+            animation-duration: ${dur}ms;
+        `;
+        el.innerHTML = HEART_SVG;
+        const path = el.querySelector('path');
+        if (path) path.style.fill = color;
+    } else {
+        const size = rand(18, 34);
+        el.style.cssText = `
+            left: ${x}vw; font-size: ${size}px;
+            --r-opacity: ${opacity}; --drift: ${drift}; --spin: ${spin}; --end-scale: ${scale};
+            animation-duration: ${dur}ms;
+        `;
+        el.textContent = '🌻';
+    }
 
-    heartsContainer.appendChild(el);
+    rainContainer.appendChild(el);
     el.addEventListener('animationend', () => {
         el.remove();
-        activeHearts = Math.max(0, activeHearts - 1);
+        activeRain = Math.max(0, activeRain - 1);
     }, { once: true });
 }
 
-function startHearts() {
-    stopHearts();
-    // Initial burst
-    const burst = isMobile() ? 3 : 5;
-    for (let i = 0; i < burst; i++) setTimeout(spawnHeart, i * 400);
-    heartTimer = setInterval(spawnHeart, isMobile() ? 1200 : 850);
+function spawnRainPair() {
+    // Siempre caen los dos juntos: un corazón y un girasol
+    spawnRainItem('heart');
+    setTimeout(() => spawnRainItem('sunflower'), rand(120, 320));
 }
-function stopHearts() {
-    clearInterval(heartTimer);
-    heartTimer = null;
+
+function startRain() {
+    stopRain();
+    const burst = isMobile() ? 3 : 5;
+    for (let i = 0; i < burst; i++) setTimeout(spawnRainPair, i * 350);
+    rainTimer = setInterval(spawnRainPair, isMobile() ? 900 : 650);
+}
+function stopRain() {
+    clearInterval(rainTimer);
+    rainTimer = null;
 }
 
 // Burst helper for interactions
 function burstHearts(count = 8) {
     const n = isMobile() ? Math.ceil(count / 2) : count;
-    for (let i = 0; i < n; i++) setTimeout(spawnHeart, i * 90);
+    for (let i = 0; i < n; i++) setTimeout(() => spawnRainItem('heart'), i * 90);
 }
 
 // Start after loader clears
-setTimeout(startHearts, 1300);
+setTimeout(startRain, 1300);
 
 // ── PARTICLE CANVAS ──────────────────────────
 (function initParticles() {
@@ -177,6 +177,8 @@ setTimeout(startHearts, 1300);
     resize();
     window.addEventListener('resize', resize, { passive: true });
 
+    const DOT_COLORS = ['#ffb703', '#ffd166', '#e63950', '#ff7a8f'];
+
     class Dot {
         constructor(init = false) { this.reset(init); }
         reset(initial = false) {
@@ -187,7 +189,7 @@ setTimeout(startHearts, 1300);
             this.vy = rand(0.18, 0.55);
             this.a  = rand(0.1, 0.42);
             this.da = rand(-0.0015, 0.0015);
-            this.col = HEART_COLORS[randInt(0, HEART_COLORS.length)];
+            this.col = DOT_COLORS[randInt(0, DOT_COLORS.length)];
         }
         tick(t) {
             this.x += this.vx + Math.sin(t * 0.001 + this.x * 0.01) * 0.18;
@@ -229,7 +231,6 @@ function handleScroll() {
     const winH = window.innerHeight;
     const docH = document.body.scrollHeight;
 
-    // Detect active section
     let current = sections[0]?.getAttribute('id') || '';
     sections.forEach(sec => {
         if (sy + winH * 0.4 >= sec.offsetTop) {
@@ -242,7 +243,6 @@ function handleScroll() {
         item.classList.toggle('active', fn.includes(current));
     });
 
-    // At bottom of page
     const atBottom = sy + winH >= docH - 100;
     if (atBottom) {
         navContainer.classList.add('nav-hidden');
@@ -263,32 +263,28 @@ window.addEventListener('scroll', () => {
     }
 }, { passive: true });
 
-// Run once on load
 handleScroll();
 
-// ── SUNFLOWER SCENE ──────────────────────────
+// ── ESCENA FINAL (climax de girasoles) ───────
 const sfContainer = $('#sunflowers-container');
 
 function triggerSunflowers() {
-    stopHearts(); // pause hearts during sunflower scene
+    stopRain(); // pausa la lluvia ambiental durante el climax
 
     const mobile     = isMobile();
-    const rainCount  = mobile ? 16 : 32;
+    const rainCount  = mobile ? 18 : 36;
     const bloomCount = mobile ? 7  : 13;
 
-    // Phase 1: Rain from top
     for (let i = 0; i < rainCount; i++) {
         setTimeout(() => spawnSfRain(), i * 80 + rand(0, 60));
     }
 
-    // Phase 2: Bloom at bottom
     for (let j = 0; j < bloomCount; j++) {
         setTimeout(() => spawnSfBloom(j, bloomCount), 250 + j * 110);
     }
 
-    // Resume hearts and clean up blooms after scene
     setTimeout(() => {
-        startHearts();
+        startRain();
         $$('.sf-bloom').forEach(el => {
             el.style.transition = 'opacity 1.4s ease';
             el.style.opacity    = '0';
@@ -341,7 +337,7 @@ function spawnSfBloom(index, total) {
 
 // ── DARK MODE ────────────────────────────────
 const themeBtn = $('#theme-toggle');
-let isDark = false;
+let isDark = true;
 
 themeBtn?.addEventListener('click', () => {
     isDark = !isDark;
@@ -384,29 +380,19 @@ function mensajeEspecial() {
     }
 }
 
-// ── POLAROID TILT (desktop only) ─────────────
-if (!('ontouchstart' in window)) {
-    $$('.polaroid').forEach(card => {
-        const inner = card.querySelector('.polaroid-inner');
-        if (!inner) return;
+// ── MES 7: NOTAS DE COSTUMBRE (acordeón simple) ──
+function toggleNota(btn) {
+    if (!btn) return;
+    const yaAbierta = btn.classList.contains('abierta');
 
-        card.addEventListener('mousemove', e => {
-            const r   = card.getBoundingClientRect();
-            const dx  = ((e.clientX - r.left)  / r.width  - 0.5) * 2;
-            const dy  = ((e.clientY - r.top)   / r.height - 0.5) * 2;
-            const rx  = clamp(dy * -7, -9, 9);
-            const ry  = clamp(dx *  7, -9, 9);
-            inner.style.transform =
-                `perspective(560px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-10px) scale(1.04)`;
-        });
+    // Cierra las demás para que solo una esté abierta a la vez
+    $$('.nota-item.abierta').forEach(n => { if (n !== btn) n.classList.remove('abierta'); });
 
-        card.addEventListener('mouseleave', () => {
-            inner.style.transform = '';
-        });
-    });
+    btn.classList.toggle('abierta', !yaAbierta);
+    if (!yaAbierta) burstHearts(4);
 }
 
-// ── KEYBOARD NAV (accessibility) ─────────────
+// ── KEYBOARD NAV (accesibilidad extra para el sobre) ─
 $$('.nav-item, .envelope-wrapper').forEach(el => {
     el.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -416,17 +402,11 @@ $$('.nav-item, .envelope-wrapper').forEach(el => {
     });
 });
 
-
 function abrirCartaLarga() {
-    document
-        .getElementById("carta-modal")
-        .classList.add("active");
-
+    document.getElementById("carta-modal").classList.add("active");
     burstHearts(20);
 }
 
 function cerrarCartaLarga() {
-    document
-        .getElementById("carta-modal")
-        .classList.remove("active");
+    document.getElementById("carta-modal").classList.remove("active");
 }
