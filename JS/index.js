@@ -380,6 +380,25 @@ function mensajeEspecial() {
     }
 }
 
+// ── BUZÓN: enviar mensaje por WhatsApp ────────
+function enviarBuzon() {
+    const campo = $('#buzon-texto');
+    const texto = campo ? campo.value.trim() : '';
+
+    if (!texto) {
+        campo?.focus();
+        alert('Escribe algo antes de enviarlo 🌻');
+        return;
+    }
+
+    const numero  = '573117501963';
+    const mensaje = encodeURIComponent(`💌 Mensaje desde nuestra página:\n\n${texto}`);
+    window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+
+    burstHearts(8);
+    if (campo) campo.value = '';
+}
+
 // ── MES 7: NOTAS DE COSTUMBRE (acordeón simple) ──
 function toggleNota(btn) {
     if (!btn) return;

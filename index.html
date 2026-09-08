@@ -3,44 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#fffaf0">
+    <meta name="theme-color" content="#170f07">
     <title>Nuestra Historia - Anita 🌻</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/index.css?v=7">
 </head>
-<body>
+<body data-theme="dark">
 
     <audio id="bg-music" src="AUDIO/Rain - Rob Scallon.mp3" preload="auto" loop></audio>
 
-    <!-- Canvas for soft floating particles -->
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-    <!-- Ambient glow orbs -->
     <div class="orb orb-1" aria-hidden="true"></div>
     <div class="orb orb-2" aria-hidden="true"></div>
     <div class="orb orb-3" aria-hidden="true"></div>
 
-    <!-- Hearts + petals layer -->
+    <!-- Lluvia de corazones + girasoles -->
     <div id="hearts-container" aria-hidden="true"></div>
 
-    <!-- Sunflowers layer (escena final) -->
+    <!-- Escena final (climax) -->
     <div id="sunflowers-container" aria-hidden="true"></div>
 
-    <!-- Page loader -->
     <div id="page-loader" role="status" aria-label="Cargando">
         <div class="loader-heart"></div>
         <p class="loader-text">Cargando nuestra historia...</p>
     </div>
 
-    <!-- Theme toggle -->
     <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">
-        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
     </button>
 
-    <!-- Bottom navbar -->
     <nav class="nav-container" id="main-nav" aria-label="Navegación principal">
         <div class="nav-item active" onclick="scrollToSection('inicio')" role="button" tabindex="0">
             <i class="fas fa-home" aria-hidden="true"></i>
@@ -73,6 +68,10 @@
         <div class="nav-item" onclick="scrollToSection('mes7')" role="button" tabindex="0">
             <i class="fas fa-seedling" aria-hidden="true"></i>
             <span class="nav-text">Mes 7</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('buzon')" role="button" tabindex="0">
+            <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
+            <span class="nav-text">Buzón</span>
         </div>
     </nav>
 
@@ -131,27 +130,27 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (5).jpeg" alt="El inicio">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (5).jpeg" alt="El inicio"></div>
                         <p class="pie">El inicio</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (1).jpeg" alt="Tu sonrisa">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (1).jpeg" alt="Tu sonrisa"></div>
                         <p class="pie">Tu sonrisa</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (3).jpeg" alt="Esa mirada">
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (3).jpeg" alt="Esa mirada"></div>
                         <p class="pie">Esa mirada</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (2).jpeg" alt="Manitos">
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (2).jpeg" alt="Manitos"></div>
                         <p class="pie">Manitos</p>
                     </div>
                 </div>
@@ -169,27 +168,27 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (20).jpeg" alt="Complicidad">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (20).jpeg" alt="Complicidad"></div>
                         <p class="pie">👅</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (8).jpeg" alt="Días de sol">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (8).jpeg" alt="Días de sol"></div>
                         <p class="pie">Días de sol</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (9).jpeg" alt="Hermosa">
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (9).jpeg" alt="Hermosa"></div>
                         <p class="pie">Hermosa</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (18).jpeg" alt="Te quiero">
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (18).jpeg" alt="Te quiero"></div>
                         <p class="pie">Te quiero</p>
                     </div>
                 </div>
@@ -207,27 +206,27 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (12).jpeg" alt="Comfama">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (12).jpeg" alt="Comfama"></div>
                         <p class="pie">Comfama</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (10).jpeg" alt="Mi lugar favorito">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (10).jpeg" alt="Mi lugar favorito"></div>
                         <p class="pie">Mi lugar favorito</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (14).jpeg" alt="Vinito">
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (14).jpeg" alt="Vinito"></div>
                         <p class="pie">Vinito</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (15).jpeg" alt="Momentos">
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (15).jpeg" alt="Momentos"></div>
                         <p class="pie">Momentos</p>
                     </div>
                 </div>
@@ -245,27 +244,27 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (6).jpeg" alt="Risas juntos">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (6).jpeg" alt="Risas juntos"></div>
                         <p class="pie">Risas juntos</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (11).jpeg" alt="Tardes tranquilas">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (11).jpeg" alt="Tardes tranquilas"></div>
                         <p class="pie">Tardes tranquilas</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (13).jpeg" alt="Contigo siempre">
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (13).jpeg" alt="Contigo siempre"></div>
                         <p class="pie">Contigo siempre</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
-                    <div class="polaroid-inner">
-                        <img src="IMG/fotos (16).jpeg" alt="Pequeños detalles">
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/fotos (16).jpeg" alt="Pequeños detalles"></div>
                         <p class="pie">Pequeños detalles</p>
                     </div>
                 </div>
@@ -283,22 +282,22 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (2).jpeg" alt="Nosotros dos">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (2).jpeg" alt="Nosotros dos"></div>
                         <p class="pie">Nosotros dos</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (3).jpeg" alt="Momento bonito">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (3).jpeg" alt="Momento bonito"></div>
                         <p class="pie">Momento bonito</p>
                     </div>
                 </div>
-                <div class="polaroid foto-centrada" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (1).jpeg" alt="Contigo, siempre">
-                        <p class="pie">Un vinstante bonito</p>
+                <div class="marco foto-centrada" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (1).jpeg" alt="Contigo, siempre"></div>
+                        <p class="pie">Un instante bonito</p>
                     </div>
                 </div>
             </div>
@@ -315,95 +314,71 @@
             </div>
 
             <div class="galeria">
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="0">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (7).jpeg" alt="Este momento">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (7).jpeg" alt="Este momento"></div>
                         <p class="pie">Este momento</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="80">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (5).jpeg" alt="Sonrisas juntos">
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (5).jpeg" alt="Sonrisas juntos"></div>
                         <p class="pie">Sonrisas juntos</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="160">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (6).jpeg" alt="Un instante bonito">
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (6).jpeg" alt="Un instante bonito"></div>
                         <p class="pie">Un instante bonito</p>
                     </div>
                 </div>
-                <div class="polaroid" data-aos="fade-up" data-aos-delay="240">
-                    <div class="polaroid-inner">
-                        <img src="IMG/5 (4).jpeg" alt="Nuestra manera de amar">
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/5 (4).jpeg" alt="Nuestra manera de amar"></div>
                         <p class="pie">Nuestra manera de amar</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ── MES 7 ─ Cartas de costumbre ──── -->
+        <!-- ── MES 7 ─ Cartas de costumbre (acordeón) ──── -->
         <section class="mes-seccion mes-final" id="mes7">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
                 <div class="mes-number" aria-hidden="true">07</div>
                 <div class="mes-title-block">
-                    <h2 class="titulo-mes">Nuestras Costumbres</h2>
+                    <h2 class="titulo-mes">Pequeños Momentos</h2>
                     <div class="mes-line" aria-hidden="true"></div>
                 </div>
             </div>
 
-            <div class="costumbre-grid">
-                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="0" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: buenos días">
-                    <div class="costumbre-card-inner">
-                        <div class="costumbre-front">
-                            <span class="costumbre-icono">☀️</span>
-                            <span class="costumbre-titulo">Buenos días</span>
-                            <span class="costumbre-tap">toca para leer</span>
-                        </div>
-                        <div class="costumbre-back">
-                            <p>Cada mañana empieza contigo en mis pensamientos, aunque sea con un simple "buenos días, negrita".</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="notas-costumbre">
+                <button type="button" class="nota-item" data-aos="fade-up" data-aos-delay="0" onclick="toggleNota(this)">
+                    <span class="nota-icono">💋</span>
+                    <span class="nota-titulo">El beso de despedida</span>
+                    <span class="nota-hint">toca para leer</span>
+                    <span class="nota-texto">Esa costumbre de nunca despedirnos sin un beso, aunque sepamos que nos vamos a ver otra vez al día siguiente.</span>
+                </button>
 
-                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="80" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: la llamada de la tarde">
-                    <div class="costumbre-card-inner">
-                        <div class="costumbre-front">
-                            <span class="costumbre-icono">📞</span>
-                            <span class="costumbre-titulo">La llamada</span>
-                            <span class="costumbre-tap">toca para leer</span>
-                        </div>
-                        <div class="costumbre-back">
-                            <p>Esa costumbre de contarnos cómo nos fue en el día, aunque no haya pasado nada especial.</p>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="nota-item" data-aos="fade-up" data-aos-delay="80" onclick="toggleNota(this)">
+                    <span class="nota-icono">🍽️</span>
+                    <span class="nota-titulo">Pelear por la comida</span>
+                    <span class="nota-hint">toca para leer</span>
+                    <span class="nota-texto">Esa costumbre tonta de pelearnos por quién se come el último bocado, y terminar compartiéndolo igual.</span>
+                </button>
 
-                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="160" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: risas tontas">
-                    <div class="costumbre-card-inner">
-                        <div class="costumbre-front">
-                            <span class="costumbre-icono">😄</span>
-                            <span class="costumbre-titulo">Risas tontas</span>
-                            <span class="costumbre-tap">toca para leer</span>
-                        </div>
-                        <div class="costumbre-back">
-                            <p>Nuestra costumbre favorita: reírnos de tonterías que solo nosotros entendemos.</p>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="nota-item" data-aos="fade-up" data-aos-delay="160" onclick="toggleNota(this)">
+                    <span class="nota-icono">😂</span>
+                    <span class="nota-titulo">Los mismos chistes</span>
+                    <span class="nota-hint">toca para leer</span>
+                    <span class="nota-texto">Esa costumbre de repetir los mismos chistes de siempre y reírnos igual de fuerte cada vez, como si fuera la primera.</span>
+                </button>
 
-                <div class="costumbre-card" data-aos="fade-up" data-aos-delay="240" onclick="toggleCostumbre(this)" role="button" tabindex="0" aria-label="Carta: buenas noches">
-                    <div class="costumbre-card-inner">
-                        <div class="costumbre-front">
-                            <span class="costumbre-icono">🌙</span>
-                            <span class="costumbre-titulo">Buenas noches</span>
-                            <span class="costumbre-tap">toca para leer</span>
-                        </div>
-                        <div class="costumbre-back">
-                            <p>No importa qué tan cansados estemos, siempre nos decimos buenas noches antes de dormir.</p>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="nota-item" data-aos="fade-up" data-aos-delay="240" onclick="toggleNota(this)">
+                    <span class="nota-icono">📵</span>
+                    <span class="nota-titulo">El "te amo" antes de colgar</span>
+                    <span class="nota-hint">toca para leer</span>
+                    <span class="nota-texto">Esa costumbre de nunca colgar la llamada sin antes decirnos cuánto nos queremos.</span>
+                </button>
             </div>
 
             <!-- Envelope -->
@@ -419,7 +394,7 @@
                     </div>
                 </div>
                 <div class="letter" role="note">
-                    <p>Anita, cada día a tu lado se siente como un regalo nuevo. Gracias por ser mi lugar favorito. ❤️</p>
+                    <p>Contigo hasta lo simple se vuelve mi momento favorito del día. Gracias por existir, negrita. 🌻</p>
                 </div>
             </div>
 
@@ -434,12 +409,30 @@
             </div>
         </section>
 
+        <!-- ── BUZÓN ─ Déjame tu mensaje ──── -->
+        <section class="mes-seccion buzon-seccion" id="buzon">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Déjame tu Mensaje</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <div class="buzon-caja" data-aos="zoom-in" data-aos-delay="100">
+                <p class="buzon-intro">Escribe lo que quieras decirme, te leo apenas lo mandes 🌻</p>
+                <textarea id="buzon-texto" class="buzon-textarea" rows="4" placeholder="Escribe aquí tu mensaje..." maxlength="500"></textarea>
+                <button class="btn-custom" onclick="enviarBuzon()">
+                    <span>Enviar mensaje</span>
+                    <i class="fab fa-whatsapp btn-icon" aria-hidden="true"></i>
+                </button>
+                <p class="buzon-nota">Se abrirá WhatsApp con tu mensaje listo para enviar</p>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Sunflower scene anchor -->
     <div class="sunflower-scene" aria-hidden="true"></div>
 
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-content">
             <p class="footer-text">
@@ -457,41 +450,41 @@
         <div class="carta-contenido">
             <span class="cerrar-carta" onclick="cerrarCartaLarga()">&times;</span>
 
-            <h2>Para Mi Negrita ❤️</h2>
+            <h2>Carta para Ti 🌻</h2>
 
             <p>
-                Mi negrita,
+                Hola, mi amor,
                 <br><br>
 
-                Quiero que sepas que contigo el tiempo se siente distinto: los días
-                buenos se sienten mejores y los días difíciles se vuelven más
-                livianos solo por tenerte cerca.
-
-                <br><br>
-
-                Me gusta la forma en la que te ríes de tus propios chistes, la
-                manera en la que me cuentas tu día con todos los detalles, y esas
-                pequeñas costumbres que ya son nuestras sin que nos diéramos cuenta.
+                Escribo esto sin ninguna razón especial, solo porque tenía ganas
+                de recordarte cuánto significas para mí.
 
                 <br><br>
 
-                No necesito una fecha especial para escribirte esto: solo quería
-                recordarte que eres importante para mí, que valoro cada momento
-                que construimos juntos y que sigo eligiéndote, un día a la vez.
+                A veces pienso en lo fácil que se siente todo contigo: reírnos
+                de nada, hablar de todo, estar en silencio y que ese silencio
+                también se sienta bonito.
 
                 <br><br>
 
-                Gracias por acompañarme, por tu paciencia, por tus abrazos y por
-                hacer de lo cotidiano algo bonito.
+                Sé que no siempre encuentro las palabras justas, pero quiero que
+                sepas que cada día contigo es un motivo más para seguir
+                construyendo esto que tenemos.
 
                 <br><br>
 
-                Te quiero muchísimo ❤️
+                Gracias por tu paciencia, por tu risa, por cuidarme sin que te
+                lo pida y por hacer de lo cotidiano algo que vale la pena
+                contar.
+
+                <br><br>
+
+                Con todo mi cariño, hoy y siempre ❤️
             </p>
         </div>
     </div>
-    
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="JS/index.js"></script>
+    <script src="JS/index.js?v=6"></script>
 </body>
 </html>
