@@ -600,11 +600,6 @@ function cerrarCartaLarga() {
         return tex;
     }
 
-    // Ruta del modelo 3D real de la estrella (si el usuario la proporcionó).
-    // Si no se puede cargar (sin internet, archivo faltante, etc.) se usa
-    // el dibujo 2D de respaldo, así la galaxia nunca se rompe.
-    const MODELO_ESTRELLA_URL = 'MODELOS/estrella-mario.glb';
-
     // ── Respaldo: estrellas dibujadas en canvas 2D (si el modelo 3D falla) ──
     function construirEstrellasConSprite() {
         const starTex = crearTexturaEstrella();
@@ -662,12 +657,13 @@ function cerrarCartaLarga() {
             const wrapper = new THREE.Group();
             wrapper.add(clon);
             wrapper.position.set(radius * Math.cos(angle), alt, radius * Math.sin(angle));
-            // Rotación inicial suave: mantenemos la carita mirando casi de
-            // frente (el modelo es bastante plano y de perfil se ve como
-            // una rayita), y giramos sobre su propio eje como un molinillo.
-            wrapper.rotation.y = (Math.random() - 0.5) * 0.5;
-            wrapper.rotation.x = (Math.random() - 0.5) * 0.25;
-            wrapper.rotation.z = Math.random() * Math.PI * 2;
+
+            // La carita (con los ojitos) debe seguir mirando hacia la cámara
+            // sin importar cuánto gires la galaxia con el dedo/mouse — es un
+            // "billboard" real: cada cuadro, en animate(), la estrella se
+            // reorienta hacia la posición de la cámara (con star.lookAt),
+            // y luego se le suma el giro tipo molinillo sobre ese mismo eje.
+            wrapper.userData.spinAngle = Math.random() * Math.PI * 2;
 
             wrapper.userData.frase = FRASES[i];
             wrapper.userData.phase = Math.random() * Math.PI * 2;
@@ -681,20 +677,34 @@ function cerrarCartaLarga() {
         }
     }
 
+    // El modelo 3D viene incrustado en base64 (JS/estrella-modelo-data.js)
+    // en vez de cargarse desde un archivo .glb aparte. Así funciona incluso
+    // abriendo el sitio con doble clic (protocolo "file://"), donde el
+    // navegador bloquea por seguridad que la página pida otros archivos
+    // locales — con el modelo ya incrustado no hace falta pedir nada.
+    function base64AArrayBuffer(base64) {
+        const binario = atob(base64);
+        const bytes = new Uint8Array(binario.length);
+        for (let i = 0; i < binario.length; i++) bytes[i] = binario.charCodeAt(i);
+        return bytes.buffer;
+    }
+
     // Carga el modelo 3D; si falla por cualquier motivo, cae al dibujo 2D.
     function cargarEstrellas() {
         const ocultarCarga = () => { if (cargando) cargando.classList.add('oculto'); };
 
-        if (typeof THREE.GLTFLoader !== 'function') {
+        if (typeof THREE.GLTFLoader !== 'function' || typeof window.ESTRELLA_MODELO_GLB_BASE64 !== 'string') {
             construirEstrellasConSprite();
             ocultarCarga();
             return;
         }
 
         try {
+            const buffer = base64AArrayBuffer(window.ESTRELLA_MODELO_GLB_BASE64);
             const loader = new THREE.GLTFLoader();
-            loader.load(
-                MODELO_ESTRELLA_URL,
+            loader.parse(
+                buffer,
+                '',
                 (gltf) => {
                     try {
                         construirEstrellasConModelo(gltf.scene);
@@ -703,7 +713,6 @@ function cerrarCartaLarga() {
                     }
                     ocultarCarga();
                 },
-                undefined,
                 () => { construirEstrellasConSprite(); ocultarCarga(); }
             );
         } catch (err) {
@@ -779,15 +788,49 @@ function cerrarCartaLarga() {
         return mejorDist <= UMBRAL_CLIC_PX ? mejor : null;
     }
 
+    // Soporte multitáctil: un dedo rota la galaxia (como antes), dos dedos
+    // hacen zoom con el clásico gesto de "pellizco" (pinch) en celular.
+    const activePointers = new Map(); // pointerId -> {x, y}
+    let pinchDistInicial = null;
+    let pinchZInicial = null;
+
+    function distanciaEntre(p1, p2) {
+        return Math.hypot(p2.x - p1.x, p2.y - p1.y);
+    }
+
     function onPointerDown(e) {
-        isDragging = true;
-        hasDraggedMuch = false;
-        autoRotate = false;
-        lastX = e.clientX; lastY = e.clientY;
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
         try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+        autoRotate = false;
+
+        if (activePointers.size === 1) {
+            isDragging = true;
+            hasDraggedMuch = false;
+            lastX = e.clientX; lastY = e.clientY;
+        } else if (activePointers.size === 2) {
+            isDragging = false;
+            hasDraggedMuch = true; // dos dedos nunca cuentan como "tocar una estrella"
+            const [p1, p2] = Array.from(activePointers.values());
+            pinchDistInicial = distanciaEntre(p1, p2);
+            pinchZInicial = camera.position.z;
+        }
     }
 
     function onPointerMove(e) {
+        if (!activePointers.has(e.pointerId)) return;
+        activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+        if (activePointers.size >= 2) {
+            e.preventDefault();
+            const [p1, p2] = Array.from(activePointers.values());
+            const distActual = distanciaEntre(p1, p2);
+            if (pinchDistInicial && distActual > 0) {
+                const factor = pinchDistInicial / distActual;
+                camera.position.z = clamp(pinchZInicial * factor, 30, 110);
+            }
+            return;
+        }
+
         if (!isDragging) return;
         const dx = e.clientX - lastX;
         const dy = e.clientY - lastY;
@@ -798,8 +841,32 @@ function cerrarCartaLarga() {
         e.preventDefault();
     }
 
-    function onPointerUp(e) {
-        if (!isDragging) return;
+    function finalizarPuntero(e) {
+        const estabaArrastrando = isDragging;
+        activePointers.delete(e.pointerId);
+
+        if (activePointers.size >= 2) {
+            // seguimos con al menos dos dedos: reiniciamos referencia de pellizco
+            const [p1, p2] = Array.from(activePointers.values());
+            pinchDistInicial = distanciaEntre(p1, p2);
+            pinchZInicial = camera.position.z;
+            return;
+        }
+
+        if (activePointers.size === 1) {
+            // quedó un dedo: retomamos el arrastre normal desde ahí, sin
+            // disparar el clic de "seleccionar estrella"
+            const restante = Array.from(activePointers.values())[0];
+            lastX = restante.x; lastY = restante.y;
+            isDragging = true;
+            hasDraggedMuch = true;
+            pinchDistInicial = null;
+            return;
+        }
+
+        // no quedan dedos/puntero sobre el lienzo
+        pinchDistInicial = null;
+        if (!estabaArrastrando) return;
         isDragging = false;
         setTimeout(() => { autoRotate = true; }, 2200);
 
@@ -809,6 +876,9 @@ function cerrarCartaLarga() {
         }
     }
 
+    function onPointerUp(e) { finalizarPuntero(e); }
+    function onPointerCancel(e) { finalizarPuntero(e); }
+
     function onWheel(e) {
         e.preventDefault();
         camera.position.z = clamp(camera.position.z + e.deltaY * 0.04, 30, 110);
@@ -817,7 +887,7 @@ function cerrarCartaLarga() {
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointermove', onPointerMove);
     canvas.addEventListener('pointerup', onPointerUp);
-    canvas.addEventListener('pointercancel', () => { isDragging = false; });
+    canvas.addEventListener('pointercancel', onPointerCancel);
     canvas.addEventListener('wheel', onWheel, { passive: false });
 
     let started = false;
@@ -835,7 +905,12 @@ function cerrarCartaLarga() {
             stars.forEach(star => {
                 const twinkle = 0.75 + 0.25 * Math.sin(t * 1.4 + star.userData.phase);
                 if (star.userData.tipo === 'modelo') {
-                    star.rotation.z += star.userData.spinSpeed;
+                    // Billboard real: la estrella siempre queda mirando de
+                    // frente hacia la cámara, gires como gires la galaxia,
+                    // y le sumamos un giro tipo molinillo sobre ese eje.
+                    star.userData.spinAngle += star.userData.spinSpeed;
+                    star.lookAt(camera.position);
+                    star.rotateZ(star.userData.spinAngle);
                     star.scale.setScalar(star.userData.baseScale * (0.94 + 0.06 * twinkle));
                 } else {
                     star.material.opacity = twinkle;
