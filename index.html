@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#170f07">
+    <meta name="description" content="Nuestra historia de amor, mes a mes 🌻">
+    <meta property="og:title" content="Nuestra Historia - Anita 🌻">
+    <meta property="og:description" content="Ocho meses de nuestra historia de amor, mes a mes.">
+    <meta property="og:type" content="website">
     <title>Nuestra Historia - Anita 🌻</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/index.css?v=9">
+    <link rel="stylesheet" href="CSS/index.css?v=11">
 </head>
 <body data-theme="dark">
 
@@ -34,6 +41,10 @@
 
     <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">
         <i class="fas fa-sun"></i>
+    </button>
+
+    <button id="music-toggle" class="theme-btn music-btn" aria-label="Pausar música" aria-pressed="true">
+        <i class="fas fa-music"></i>
     </button>
 
     <nav class="nav-container" id="main-nav" aria-label="Navegación principal">
@@ -69,6 +80,10 @@
             <i class="fas fa-seedling" aria-hidden="true"></i>
             <span class="nav-text">Mes 7</span>
         </div>
+        <div class="nav-item" onclick="scrollToSection('mes8')" role="button" tabindex="0">
+            <i class="fas fa-crown" aria-hidden="true"></i>
+            <span class="nav-text">Mes 8</span>
+        </div>
         <div class="nav-item" onclick="scrollToSection('buzon')" role="button" tabindex="0">
             <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
             <span class="nav-text">Buzón</span>
@@ -97,7 +112,8 @@
 
             <div class="contador-wrapper" data-aos="fade-up" data-aos-delay="200">
                 <div class="contador-label">llevamos juntos</div>
-                <div id="contador" class="contador-estilo" aria-live="polite"></div>
+                <div id="contador-meses" class="contador-meses"></div>
+                <div id="contador" class="contador-estilo"></div>
                 <div class="contador-label">de amor</div>
             </div>
 
@@ -136,25 +152,25 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (5).jpeg" alt="El inicio"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-5.jpg" alt="El inicio" loading="lazy" decoding="async"></div>
                         <p class="pie">El inicio</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (1).jpeg" alt="Tu sonrisa"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-1.jpg" alt="Tu sonrisa" loading="lazy" decoding="async"></div>
                         <p class="pie">Tu sonrisa</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (3).jpeg" alt="Esa mirada"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-3.jpg" alt="Esa mirada" loading="lazy" decoding="async"></div>
                         <p class="pie">Esa mirada</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="240">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (2).jpeg" alt="Manitos"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-2.jpg" alt="Manitos" loading="lazy" decoding="async"></div>
                         <p class="pie">Manitos</p>
                     </div>
                 </div>
@@ -174,25 +190,25 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (20).jpeg" alt="Complicidad"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-20.jpg" alt="Complicidad" loading="lazy" decoding="async"></div>
                         <p class="pie">👅</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (8).jpeg" alt="Días de sol"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-8.jpg" alt="Días de sol" loading="lazy" decoding="async"></div>
                         <p class="pie">Días de sol</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (9).jpeg" alt="Hermosa"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-9.jpg" alt="Hermosa" loading="lazy" decoding="async"></div>
                         <p class="pie">Hermosa</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="240">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (18).jpeg" alt="Te quiero"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-18.jpg" alt="Te quiero" loading="lazy" decoding="async"></div>
                         <p class="pie">Te quiero</p>
                     </div>
                 </div>
@@ -212,25 +228,25 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (12).jpeg" alt="Comfama"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-12.jpg" alt="Comfama" loading="lazy" decoding="async"></div>
                         <p class="pie">Comfama</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (10).jpeg" alt="Mi lugar favorito"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-10.jpg" alt="Mi lugar favorito" loading="lazy" decoding="async"></div>
                         <p class="pie">Mi lugar favorito</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (14).jpeg" alt="Vinito"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-14.jpg" alt="Vinito" loading="lazy" decoding="async"></div>
                         <p class="pie">Vinito</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="240">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (15).jpeg" alt="Momentos"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-15.jpg" alt="Momentos" loading="lazy" decoding="async"></div>
                         <p class="pie">Momentos</p>
                     </div>
                 </div>
@@ -250,25 +266,25 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (6).jpeg" alt="Risas juntos"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-6.jpg" alt="Risas juntos" loading="lazy" decoding="async"></div>
                         <p class="pie">Risas juntos</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (11).jpeg" alt="Tardes tranquilas"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-11.jpg" alt="Tardes tranquilas" loading="lazy" decoding="async"></div>
                         <p class="pie">Tardes tranquilas</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (13).jpeg" alt="Contigo siempre"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-13.jpg" alt="Contigo siempre" loading="lazy" decoding="async"></div>
                         <p class="pie">Contigo siempre</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="240">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/fotos (16).jpeg" alt="Pequeños detalles"></div>
+                        <div class="foto-wrap"><img src="IMG/web/fotos-16.jpg" alt="Pequeños detalles" loading="lazy" decoding="async"></div>
                         <p class="pie">Pequeños detalles</p>
                     </div>
                 </div>
@@ -288,19 +304,19 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (2).jpeg" alt="Nosotros dos"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-2.jpg" alt="Nosotros dos" loading="lazy" decoding="async"></div>
                         <p class="pie">Nosotros dos</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (3).jpeg" alt="Momento bonito"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-3.jpg" alt="Momento bonito" loading="lazy" decoding="async"></div>
                         <p class="pie">Momento bonito</p>
                     </div>
                 </div>
                 <div class="marco foto-centrada" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (1).jpeg" alt="Contigo, siempre"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-1.jpg" alt="Contigo, siempre" loading="lazy" decoding="async"></div>
                         <p class="pie">Un instante bonito</p>
                     </div>
                 </div>
@@ -320,25 +336,25 @@
             <div class="galeria">
                 <div class="marco" data-aos="fade-up" data-aos-delay="0">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (7).jpeg" alt="Este momento"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-7.jpg" alt="Este momento" loading="lazy" decoding="async"></div>
                         <p class="pie">Este momento</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="80">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (5).jpeg" alt="Sonrisas juntos"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-5.jpg" alt="Sonrisas juntos" loading="lazy" decoding="async"></div>
                         <p class="pie">Sonrisas juntos</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="160">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (6).jpeg" alt="Un instante bonito"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-6.jpg" alt="Un instante bonito" loading="lazy" decoding="async"></div>
                         <p class="pie">Un instante bonito</p>
                     </div>
                 </div>
                 <div class="marco" data-aos="fade-up" data-aos-delay="240">
                     <div class="marco-inner">
-                        <div class="foto-wrap"><img src="IMG/5 (4).jpeg" alt="Nuestra manera de amar"></div>
+                        <div class="foto-wrap"><img src="IMG/web/5-4.jpg" alt="Nuestra manera de amar" loading="lazy" decoding="async"></div>
                         <p class="pie">Nuestra manera de amar</p>
                     </div>
                 </div>
@@ -413,6 +429,94 @@
             </div>
         </section>
 
+        <!-- ── MES 8 ─ Ocho meses contigo ──── -->
+        <section class="mes-seccion mes8-seccion" id="mes8">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">08</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Ocho Meses Contigo</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <p class="mes8-intro" data-aos="fade-up" data-aos-delay="80">
+                Ocho meses, ocho capítulos. Un pedacito de lo que fue cada uno 🌻
+            </p>
+
+            <!-- Línea de tiempo: una frase por cada mes -->
+            <ol class="mes8-timeline">
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="0">
+                    <span class="mes8-punto" aria-hidden="true">1</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 1 · Nuestro Primer Suspiro</span>
+                        <p>Empezó con una mirada y un nervio bonito en el pecho. Ahí supe que algo grande venía.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="40">
+                    <span class="mes8-punto" aria-hidden="true">2</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 2 · Creciendo en Amor</span>
+                        <p>Aprendimos a conocernos sin prisa, entre mensajes largos y abrazos más largos todavía.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="80">
+                    <span class="mes8-punto" aria-hidden="true">3</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 3 · Cada Vez Más Unidos</span>
+                        <p>Tu mano se volvió mi lugar favorito y tu risa, mi canción preferida.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="120">
+                    <span class="mes8-punto" aria-hidden="true">4</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 4 · Costumbre Bonita</span>
+                        <p>Lo cotidiano dejó de ser rutina y se volvió algo nuestro.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="0">
+                    <span class="mes8-punto" aria-hidden="true">5</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 5 · Aventuras Compartidas</span>
+                        <p>Cada salida contigo, por pequeña que fuera, se sintió como un viaje.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="40">
+                    <span class="mes8-punto" aria-hidden="true">6</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 6 · El Presente</span>
+                        <p>Medio año juntos y todavía me pones nervioso cuando me miras así.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito" data-aos="fade-up" data-aos-delay="80">
+                    <span class="mes8-punto" aria-hidden="true">7</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 7 · Pequeños Momentos</span>
+                        <p>Descubrí que el amor vive en los detalles: un beso de despedida, un "te amo" antes de colgar.</p>
+                    </div>
+                </li>
+                <li class="mes8-hito mes8-hito-actual" data-aos="fade-up" data-aos-delay="120">
+                    <span class="mes8-punto" aria-hidden="true">8</span>
+                    <div class="mes8-card">
+                        <span class="mes8-mes">Mes 8 · Hoy</span>
+                        <p>Ocho meses, y te sigo eligiendo cada día, negrita. Lo mejor todavía está por venir.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <!-- Frases de los 8 meses (cambian con el botón) -->
+            <div class="mes8-frases" data-aos="zoom-in" data-aos-delay="100">
+                <div class="mes8-infinito" aria-hidden="true">8</div>
+                <p class="mes8-frase" id="mes8-frase" aria-live="polite">
+                    El 8 acostado es infinito… y así quiero que sea lo nuestro.
+                </p>
+                <span class="mes8-contador" id="mes8-contador">1 / 20</span>
+                <button class="btn-custom" onclick="siguienteFraseMes8()">
+                    <span>Otra frase</span>
+                    <i class="fas fa-heart btn-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </section>
+
         <!-- ── BUZÓN ─ Déjame tu mensaje ──── -->
         <section class="mes-seccion buzon-seccion" id="buzon">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
@@ -433,7 +537,7 @@
             </div>
         </section>
 
-        <!-- ── GALAXIA · 100 estrellas, 100 frases ──── -->
+        <!-- ── GALAXIA · 300 estrellas, 300 frases ──── -->
         <section class="mes-seccion galaxia-seccion" id="galaxia">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
                 <div class="mes-title-block">
@@ -442,11 +546,16 @@
                 </div>
             </div>
             <p class="galaxia-intro" data-aos="fade-up" data-aos-delay="80">
-                100 estrellas, 100 razones para quererte. Arrastra para girar la galaxia y toca una estrella para leer su mensaje.
+                300 estrellas, 300 razones para quererte. Arrastra para girar la galaxia y toca una estrella para leer su mensaje.
             </p>
 
             <div class="galaxia-contenedor" id="galaxia-contenedor" data-aos="zoom-in" data-aos-delay="150">
-                <canvas id="galaxia-canvas"></canvas>
+                <canvas id="galaxia-canvas" aria-label="Galaxia de 300 estrellas"></canvas>
+
+                <div class="galaxia-zoom" aria-label="Zoom de la galaxia">
+                    <button type="button" data-zoom="in" aria-label="Acercar"><i class="fas fa-plus"></i></button>
+                    <button type="button" data-zoom="out" aria-label="Alejar"><i class="fas fa-minus"></i></button>
+                </div>
 
                 <div class="galaxia-cargando" id="galaxia-cargando">
                     <span class="galaxia-cargando-icono">🌌</span>
@@ -461,7 +570,7 @@
                     </div>
                 </div>
             </div>
-            <p class="galaxia-hint">✦ arrastra para explorar · toca una estrella ✦</p>
+            <p class="galaxia-hint">✦ arrastra para girar · pellizca o usa + / − para acercar · toca una estrella ✦</p>
         </section>
 
     </main>
@@ -481,9 +590,9 @@
         </button>
     </footer>
 
-    <div id="carta-modal" class="carta-modal">
+    <div id="carta-modal" class="carta-modal" role="dialog" aria-modal="true" aria-label="Carta para ti">
         <div class="carta-contenido">
-            <span class="cerrar-carta" onclick="cerrarCartaLarga()">&times;</span>
+            <button type="button" class="cerrar-carta" onclick="cerrarCartaLarga()" aria-label="Cerrar carta">&times;</button>
 
             <h2>Carta para Ti 🌻</h2>
 
@@ -519,10 +628,16 @@
         </div>
     </div>
 
+    <!-- Aviso bonito (reemplaza alert/confirm del navegador) -->
+    <div id="aviso-modal" class="aviso-modal" role="dialog" aria-modal="true" aria-labelledby="aviso-texto" hidden>
+        <div class="aviso-caja">
+            <span class="aviso-icono" id="aviso-icono" aria-hidden="true">🌻</span>
+            <p id="aviso-texto"></p>
+            <div class="aviso-botones" id="aviso-botones"></div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="JS/estrella-modelo-data.js?v=1"></script>
-    <script src="JS/index.js?v=16"></script>
+    <script src="JS/index.js?v=18"></script>
 </body>
 </html>
