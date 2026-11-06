@@ -673,7 +673,7 @@ document.addEventListener('keydown', (e) => {
 
     // ── 300 frases, generadas de una combinación de 15x20 ──
     const APERTURAS = [
-        'Después de ocho meses,',
+        'Después de nueve meses,',
         'Cuando me abrazas,',
         'Cada mañana que pienso en ti,',
         'Con cada beso tuyo,',
@@ -787,6 +787,10 @@ document.addEventListener('keydown', (e) => {
         let reanudarTimer = null;
         const stars = [];
         let instancias = null; // { meshes: [InstancedMesh], offsets: [Matrix4] }
+        let intro = null;       // corazón -> girasol -> explosión (JS/galaxia-intro.js)
+        let introLista = false; // la galaxia ya se ve lo suficiente para empezar
+        const introTexto = document.getElementById('galaxia-intro-texto');
+        const introActiva = () => intro !== null && !intro.terminada;
 
         // Galaxia más grande para que las 300 estrellas respiren
         const RADIO_MIN   = 6;
@@ -909,6 +913,7 @@ document.addEventListener('keydown', (e) => {
                 star.userData.frase = FRASES[i];
                 star.userData.phase = Math.random() * Math.PI * 2;
                 star.userData.tipo = 'sprite';
+                star.userData.tinte = color.clone();
                 star.userData.baseScale = 1.7 + Math.random() * 1.2;
                 star.scale.set(star.userData.baseScale, star.userData.baseScale, 1);
                 galaxyGroup.add(star);
@@ -953,6 +958,7 @@ document.addEventListener('keydown', (e) => {
                         frase: FRASES[i],
                         phase: Math.random() * Math.PI * 2,
                         tipo: 'instancia',
+                        tinte,
                         spinAngle: Math.random() * Math.PI * 2,
                         spinSpeed: 0.004 + Math.random() * 0.008,
                         baseScale: escalaBase * (0.85 + Math.random() * 0.55),
@@ -965,6 +971,22 @@ document.addEventListener('keydown', (e) => {
             galaxyGroup.add(instancias.dummy);
         }
 
+        function prepararIntro() {
+            const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (intro || sinMovimiento || !window.GalaxiaIntro || !stars.length) return;
+            try {
+                intro = window.GalaxiaIntro.crear({
+                    THREE,
+                    padre: galaxyGroup,
+                    destinos: stars.map(st => st.position),
+                    tintes: stars.map(st => st.userData.tinte || new THREE.Color(0xffffff)),
+                    alMostrarTexto: (ver) => introTexto?.classList.toggle('visible', ver),
+                });
+            } catch (err) {
+                intro = null; // si algo falla, se ve la galaxia normal
+            }
+        }
+
         function base64AArrayBuffer(base64) {
             const binario = atob(base64);
             const bytes = new Uint8Array(binario.length);
@@ -973,7 +995,7 @@ document.addEventListener('keydown', (e) => {
         }
 
         function cargarEstrellas() {
-            const ocultarCarga = () => { if (cargando) cargando.classList.add('oculto'); };
+            const ocultarCarga = () => { if (cargando) cargando.classList.add('oculto'); prepararIntro(); };
             const respaldo = () => {
                 // limpia cualquier intento a medias antes de usar el 2D
                 if (instancias) { instancias.meshes.forEach(m => galaxyGroup.remove(m)); instancias = null; }
@@ -1087,6 +1109,7 @@ document.addEventListener('keydown', (e) => {
 
         function onPointerDown(e) {
             if (mensajeAbierto) return;
+            if (introActiva()) { intro.saltar(performance.now()); return; }
             tipoPuntero = e.pointerType || 'mouse';
             activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
             try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
@@ -1197,9 +1220,16 @@ document.addEventListener('keydown', (e) => {
             if (!visible || document.hidden) { corriendo = false; return; }
             requestAnimationFrame(animate);
             t += 0.016;
-            if (autoRotate && !isDragging) rotY += 0.0015;
+            const enIntro = introActiva();
+            let inclinacion = 1;
+            if (enIntro) {
+                if (introLista) intro.empezar(performance.now());
+                inclinacion = intro.actualizar(performance.now());
+            } else if (autoRotate && !isDragging) {
+                rotY += 0.0015;
+            }
             galaxyGroup.rotation.y = rotY;
-            galaxyGroup.rotation.x = rotX;
+            galaxyGroup.rotation.x = rotX * inclinacion;
             galaxyGroup.updateMatrixWorld();
 
             if (instancias) {
@@ -1208,22 +1238,38 @@ document.addEventListener('keydown', (e) => {
                     const ud = stars[i].userData;
                     const twinkle = 0.75 + 0.25 * Math.sin(t * 1.4 + ud.phase);
                     ud.spinAngle += ud.spinSpeed;
-                    dummy.position.copy(stars[i].position);
+                    const escalaIntro = enIntro ? intro.escalas[i] : 1;
+                    dummy.position.copy(enIntro ? intro.posiciones[i] : stars[i].position);
                     dummy.lookAt(camera.position);   // la carita siempre mira a la cámara
                     dummy.rotateZ(ud.spinAngle);     // giro tipo molinillo
-                    dummy.scale.setScalar(ud.baseScale * (0.94 + 0.06 * twinkle));
+                    dummy.scale.setScalar(ud.baseScale * escalaIntro * (0.94 + 0.06 * twinkle));
                     dummy.updateMatrix();
                     for (let k = 0; k < meshes.length; k++) {
                         tmp.multiplyMatrices(dummy.matrix, offsets[k]);
                         meshes[k].setMatrixAt(i, tmp);
+                        if (enIntro || instancias.colorPendiente) meshes[k].setColorAt(i, enIntro ? intro.colores[i] : ud.tinte);
                     }
                 }
-                meshes.forEach(m => { m.instanceMatrix.needsUpdate = true; });
+                meshes.forEach(m => {
+                    m.instanceMatrix.needsUpdate = true;
+                    if (m.instanceColor && (enIntro || instancias.colorPendiente)) m.instanceColor.needsUpdate = true;
+                });
+                instancias.colorPendiente = enIntro; // un frame más para devolver el color original
             } else {
-                stars.forEach(star => {
+                stars.forEach((star, i) => {
                     const twinkle = 0.75 + 0.25 * Math.sin(t * 1.4 + star.userData.phase);
+                    const escalaIntro = enIntro ? intro.escalas[i] : 1;
                     star.material.opacity = twinkle;
-                    star.scale.setScalar(star.userData.baseScale * (0.9 + 0.1 * twinkle));
+                    star.scale.setScalar(star.userData.baseScale * escalaIntro * (0.9 + 0.1 * twinkle));
+                    if (enIntro) {
+                        if (!star.userData.posFinal) star.userData.posFinal = star.position.clone();
+                        star.position.copy(intro.posiciones[i]);
+                        star.material.color.copy(intro.colores[i]);
+                    } else if (star.userData.posFinal) {
+                        star.position.copy(star.userData.posFinal);
+                        star.material.color.copy(star.userData.tinte);
+                        star.userData.posFinal = null;
+                    }
                 });
             }
 
@@ -1243,6 +1289,25 @@ document.addEventListener('keydown', (e) => {
             }, { threshold: 0 }).observe(contenedor);
         }
         document.addEventListener('visibilitychange', () => { if (!document.hidden && visible) arrancar(); });
+        if ('IntersectionObserver' in window) {
+            const ioIntro = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { introLista = true; ioIntro.disconnect(); }
+            }, { threshold: 0.45 });
+            ioIntro.observe(contenedor);
+        } else {
+            introLista = true;
+        }
+
+        // Botón "Repetir animación": corazón -> girasol -> explosión otra vez
+        document.getElementById('galaxia-repetir')?.addEventListener('click', () => {
+            if (!intro) return;
+            window.cerrarMensajeGalaxia();
+            rotY = 0;                       // la figura vuelve a mirar de frente
+            zoomManual = false;
+            camera.position.z = distanciaIdeal();
+            intro.reiniciar(performance.now());
+            arrancar();
+        });
 
         initScene();
         cargarEstrellas();

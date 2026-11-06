@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#170f07">
     <meta name="description" content="Nuestra historia de amor, mes a mes 🌻">
     <meta property="og:title" content="Nuestra Historia - Anita 🌻">
-    <meta property="og:description" content="Ocho meses de nuestra historia de amor, mes a mes.">
+    <meta property="og:description" content="Nueve meses de nuestra historia de amor, mes a mes.">
     <meta property="og:type" content="website">
     <title>Nuestra Historia - Anita 🌻</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/index.css?v=11">
+    <link rel="stylesheet" href="CSS/index.css?v=13">
+    <link rel="stylesheet" href="CSS/girasol.css?v=3">
 </head>
 <body data-theme="dark">
 
@@ -83,6 +84,14 @@
         <div class="nav-item" onclick="scrollToSection('mes8')" role="button" tabindex="0">
             <i class="fas fa-crown" aria-hidden="true"></i>
             <span class="nav-text">Mes 8</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('mes9')" role="button" tabindex="0">
+            <i class="fas fa-camera-retro" aria-hidden="true"></i>
+            <span class="nav-text">Mes 9</span>
+        </div>
+        <div class="nav-item" onclick="scrollToSection('girasol')" role="button" tabindex="0">
+            <i class="fas fa-spa" aria-hidden="true"></i>
+            <span class="nav-text">Girasol</span>
         </div>
         <div class="nav-item" onclick="scrollToSection('buzon')" role="button" tabindex="0">
             <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
@@ -517,6 +526,68 @@
             </div>
         </section>
 
+        <!-- ── MES 9 ─ Nueve meses contigo ──── -->
+        <section class="mes-seccion mes-alt" id="mes9">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-number" aria-hidden="true">09</div>
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Nueve Meses Contigo</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <p class="mes8-intro" data-aos="fade-up" data-aos-delay="80">
+                Besos, caritas y travesuras: así se ven nuestros nueve meses 🌻
+            </p>
+
+            <div class="galeria">
+                <div class="marco" data-aos="fade-up" data-aos-delay="0">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/web/9-1.jpg" alt="Nuestros besos" loading="lazy" decoding="async"></div>
+                        <p class="pie">Nuestros besos</p>
+                    </div>
+                </div>
+                <div class="marco" data-aos="fade-up" data-aos-delay="80">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/web/9-2.jpg" alt="ambatukhaam" loading="lazy" decoding="async"></div>
+                        <p class="pie">ambatukhaam</p>
+                    </div>
+                </div>
+                <div class="marco" data-aos="fade-up" data-aos-delay="160">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/web/9-3.jpg" alt="67" loading="lazy" decoding="async"></div>
+                        <p class="pie">67</p>
+                    </div>
+                </div>
+                <div class="marco" data-aos="fade-up" data-aos-delay="240">
+                    <div class="marco-inner">
+                        <div class="foto-wrap"><img src="IMG/web/9-4.jpg" alt="Tú y yo" loading="lazy" decoding="async"></div>
+                        <p class="pie">Tú y yo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── GIRASOL ─ florece en letras ──── -->
+        <section class="mes-seccion girasol-seccion" id="girasol">
+            <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
+                <div class="mes-title-block">
+                    <h2 class="titulo-mes">Un Girasol para Ti</h2>
+                    <div class="mes-line" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <div class="girasol-stage">
+                <canvas id="girasol-canvas" role="img" aria-label="Un girasol hecho de letras que florece poco a poco"></canvas>
+            </div>
+            <div class="repetir-wrap">
+                <button type="button" class="btn-custom" id="girasol-repetir">
+                    <span>Volver a florecer</span>
+                    <i class="fas fa-rotate-right btn-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </section>
+
         <!-- ── BUZÓN ─ Déjame tu mensaje ──── -->
         <section class="mes-seccion buzon-seccion" id="buzon">
             <div class="mes-header mes-header-center" data-aos="fade-up" data-aos-duration="800">
@@ -551,6 +622,7 @@
 
             <div class="galaxia-contenedor" id="galaxia-contenedor" data-aos="zoom-in" data-aos-delay="150">
                 <canvas id="galaxia-canvas" aria-label="Galaxia de 300 estrellas"></canvas>
+                <p class="galaxia-intro-texto" id="galaxia-intro-texto" aria-hidden="true">Feliz mes, mi amor 🌻</p>
 
                 <div class="galaxia-zoom" aria-label="Zoom de la galaxia">
                     <button type="button" data-zoom="in" aria-label="Acercar"><i class="fas fa-plus"></i></button>
@@ -571,6 +643,12 @@
                 </div>
             </div>
             <p class="galaxia-hint">✦ arrastra para girar · pellizca o usa + / − para acercar · toca una estrella ✦</p>
+            <div class="repetir-wrap">
+                <button type="button" class="btn-custom" id="galaxia-repetir">
+                    <span>Repetir animación</span>
+                    <i class="fas fa-rotate-right btn-icon" aria-hidden="true"></i>
+                </button>
+            </div>
         </section>
 
     </main>
@@ -600,36 +678,39 @@
                 Mi negrita,
                 <br><br>
 
-                Hoy cumplimos ocho meses, y todavía me sorprende lo rápido que
-                se pasa el tiempo cuando estoy contigo. Parece que fue ayer el
-                8 de febrero, y al mismo tiempo siento que te conozco de toda
-                la vida.
+                Hoy cumplimos nueve meses. Nueve veces el calendario ha llegado
+                al 8 y nueve veces me ha encontrado igual de enamorado que el
+                primer día, o más. Dicen que nueve meses es el tiempo que tarda
+                en nacer algo nuevo, y yo siento que en este tiempo nació un
+                "nosotros" que no sabía que me hacía tanta falta.
 
                 <br><br>
 
-                En estos meses aprendí que el amor no está solo en los días
-                grandes: está en tus mensajes de buenos días, en pelearnos por
-                el último bocado, en el beso de despedida y en ese "te amo"
-                antes de colgar que nunca se nos olvida.
+                Me encanta lo que somos cuando nadie nos ve: tus caritas raras
+                en las fotos, tu lengua afuera cuando te pones traviesa, los
+                besos robados en cualquier lugar y esas risas que no tienen
+                sentido para nadie más que para nosotros. Así, sin filtro, eres
+                lo más bonito que tengo.
 
                 <br><br>
 
-                Gracias por tenerme paciencia cuando no encuentro las palabras,
-                por reírte de mis chistes repetidos, por cuidarme sin que te lo
-                pida y por hacer de lo cotidiano algo que vale la pena contar.
-                Contigo hasta un día normal se vuelve mi favorito.
+                Gracias por quedarte en los días buenos y también en los
+                difíciles, por tenerme paciencia, por cuidarme a tu manera y por
+                enseñarme que querer bonito también es escuchar, ceder y volver
+                a abrazar. Contigo aprendo cada día a ser mejor.
 
                 <br><br>
 
-                No sé todo lo que nos espera, pero sí sé que quiero vivirlo a tu
-                lado. Ocho meses son apenas el comienzo de todo lo que quiero
-                construir contigo.
+                Eres mi girasol: siempre buscando la luz, y de alguna forma
+                siempre me la terminas dando a mí. Ojalá sigamos sumando meses,
+                fotos borrosas, planes a medias y recuerdos que solo nosotros
+                entendemos.
 
                 <br><br>
 
                 Te amo hoy, mañana y en cada mes que venga.
                 <br>
-                Feliz mes 8, mi amor ❤️🌻
+                Feliz mes 9, mi amor ❤️🌻
             </p>
         </div>
     </div>
@@ -644,6 +725,8 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="JS/index.js?v=18"></script>
+    <script src="JS/galaxia-intro.js?v=2"></script>
+    <script src="JS/index.js?v=20"></script>
+    <script src="JS/girasol.js?v=3"></script>
 </body>
 </html>
