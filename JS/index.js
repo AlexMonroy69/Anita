@@ -335,7 +335,12 @@ function handleScroll() {
         centrarItemNav(activo);
     }
 
-    const atBottom = sy + winH >= docH - 100;
+    // Margen distinto para ocultar y para mostrar: en celular la barra del
+    // navegador cambia innerHeight al subir y el menú no debe parpadear.
+    const distanciaAlFinal = docH - (sy + winH);
+    const atBottom = navContainer?.classList.contains('nav-hidden')
+        ? distanciaAlFinal < 220
+        : distanciaAlFinal < 100;
     if (atBottom) {
         navContainer?.classList.add('nav-hidden');
         if (!sunflowersFired) {
